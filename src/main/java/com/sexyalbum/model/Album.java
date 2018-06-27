@@ -11,6 +11,7 @@ public class Album {
     public Album(){}
 
     public Album(Long userid,String albumName){
+        this.albumid=null;
         this.userid=userid;
         this.albumName=albumName;
         eleList=new ArrayList<>();
@@ -21,9 +22,10 @@ public class Album {
         return albumid;
     }
 
+    /* 模型类的id不允许修改
     public void setAlbumid(Long albumid) {
         this.albumid = albumid;
-    }
+    }*/
 
     public Long getUserid() {
         return userid;

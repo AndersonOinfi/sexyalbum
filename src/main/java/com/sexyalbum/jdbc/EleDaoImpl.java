@@ -12,7 +12,7 @@ public class EleDaoImpl implements EleDao {
 
     @Override
     public int add(AlbumElementable ele) {
-        return template.update("insert into album(id, source, description) values(?, ?, ?)",
+        return template.update("insert into album(eleid, source, description) values(?, ?, ?)",
                 ele.getEleId(), ele.getSource(), ele.getDescription());
     }
 

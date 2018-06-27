@@ -18,25 +18,25 @@ public class UserDaoImpl implements UserDao {
         if(find(user.getUsername())!=null)
             return -1;
         else
-            return  template.update("insert into a_user(id, username, password) values(?, ?, ?)",
+            return  template.update("insert into album_user(userid, username, password) values(?, ?, ?)",
                 user.getUserid(), user.getUsername(), user.getPassword());
     }
 
     @Override
     public int update(User user) {
-        return template.update("update a_user set username=?, password=?, where id=?",
-                user.getUsername(), user.getPassword(), user.getUserid());
+        return template.update("update album_user set username=?, password=?, where userid=?",
+                new Object[]{user.getUsername(), user.getPassword(), 1});
     }
 
     @Override
     public int delete(User user) {
-        return template.update("delete from a_user where id=?", user.getUserid());
+        return template.update("delete from album_user where userid=?", user.getUserid());
     }
 
     //todo
     @Override
     public User find(Long id) {
-        List<User> user=template.query("select * from a_user where id=?",new Object[]{id},
+        List<User> user=template.query("select * from album_user where userid=?",new Object[]{id},
                 new BeanPropertyRowMapper(User.class));
         if(user!=null&&!user.isEmpty())
             return user.get(0);
@@ -44,7 +44,7 @@ public class UserDaoImpl implements UserDao {
             return null;
     }
     public User find(String username){
-        List<User> user=template.query("select * from a_user where username=?",new Object[]{username},
+        List<User> user=template.query("select * from album_user where username=?",new Object[]{username},
                 new BeanPropertyRowMapper(User.class));
         if(user!=null&&!user.isEmpty())
             return user.get(0);
@@ -60,7 +60,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> findWholeUserList() {
-        List<User> users=template.query("select * from a_user",new Object[]{},
+        List<User> users=template.query("select * from album_user",new Object[]{},
                 new BeanPropertyRowMapper<User>(User.class));
         if(users!=null&&!users.isEmpty())
             return users;

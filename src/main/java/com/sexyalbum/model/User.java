@@ -12,7 +12,7 @@ public class User {
     }
 
     public User(String username, String password) {
-        this();
+        this.userid=null;
         this.username = username;
         this.password = password;
         //todo
@@ -22,9 +22,10 @@ public class User {
         return userid;
     }
 
+    /* 模型类的id不允许修改
     public void setUserid(Long userid) {
         this.userid = userid;
-    }
+    }*/
 
     public String getUsername() {
         return username;

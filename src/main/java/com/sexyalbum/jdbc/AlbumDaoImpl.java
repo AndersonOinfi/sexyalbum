@@ -15,13 +15,13 @@ public class AlbumDaoImpl implements AlbumDao {
 
     @Override
     public int add(Album album) {
-        return template.update("insert into album(id, userid, albumname) values(?, ?, ?)",
+        return template.update("insert into album(albumid, userid, albumname) values(?, ?, ?)",
                 album.getAlbumid(), album.getUserid(), album.getAlbumName());
     }
 
     @Override
     public int update(Album album) {
-        return template.update("update album set albumname=? where id=?",
+        return template.update("update album set albumname=? where albumid=?",
                 album.getAlbumName(), album.getAlbumid());
     }
 
@@ -33,7 +33,7 @@ public class AlbumDaoImpl implements AlbumDao {
     // todo 数据库中并没有存储所有信息，是否能生成实例有待测试
     @Override
     public Album find(Long id) {
-        List<Album> album=template.query("select * from album where id=?", new Object[]{id},
+        List<Album> album=template.query("select * from album where albumid=?", new Object[]{id},
                 new BeanPropertyRowMapper(Album.class));
         if(album!=null&&!album.isEmpty())
             return album.get(0);
