@@ -3,6 +3,7 @@ package com.sexyalbum.model;
 import java.util.ArrayList;
 
 public class User {
+    private Long userid;
     private String username;
     private String password;
     private ArrayList<Album> albums;
@@ -15,6 +16,14 @@ public class User {
         this.username = username;
         this.password = password;
         //todo
+    }
+
+    public Long getUserid() {
+        return userid;
+    }
+
+    public void setUserid(Long userid) {
+        this.userid = userid;
     }
 
     public String getUsername() {
