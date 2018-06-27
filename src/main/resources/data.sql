@@ -1,2 +1,2 @@
-INSERT INTO album_user (id, first_name, last_name) VALUES (1, 'Alex', 'Antonov');
-INSERT INTO album (id, name) VALUES (1, 'Packt');
+INSERT INTO album_user (userid, username, password) VALUES (1, 'jack', '123');
+INSERT INTO album (albumid, userid, albumname) VALUES (1, 1,'jack album');

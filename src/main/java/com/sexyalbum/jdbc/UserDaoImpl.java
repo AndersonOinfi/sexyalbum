@@ -29,10 +29,11 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public int delete(Long id) {
-        return template.update("delete from a_user where id=?", id);
+    public int delete(User user) {
+        return template.update("delete from a_user where id=?", user.getUserid());
     }
 
+    //todo
     @Override
     public User find(Long id) {
         List<User> user=template.query("select * from a_user where id=?",new Object[]{id},

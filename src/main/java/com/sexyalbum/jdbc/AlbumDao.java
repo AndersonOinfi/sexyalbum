@@ -7,7 +7,7 @@ import java.util.List;
 public interface AlbumDao {
     int add(Album album);
     int update(Album album);
-    int delete(Long id);
+    int delete(Album album);
     Album find(Long id);
     //todo
     List<Album> findUserAlbumsList(Long userid);
