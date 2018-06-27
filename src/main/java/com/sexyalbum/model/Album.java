@@ -3,10 +3,10 @@ package com.sexyalbum.model;
 import java.util.ArrayList;
 
 public class Album {
-    Long albumid;
-    Long userid;
-    String albumName;
-    ArrayList<AlbumElementable> eleList;
+    private Long albumid;
+    private Long userid;
+    private String albumName;
+    private ArrayList<AlbumElementable> eleList;
 
     public Album(){}
 
