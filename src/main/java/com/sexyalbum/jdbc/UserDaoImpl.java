@@ -15,7 +15,10 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public int add(User user) {
-        return  template.update("insert into a_user(id, username, password) values(?, ?, ?)",
+        if(find(user.getUsername())!=null)
+            return -1;
+        else
+            return  template.update("insert into a_user(id, username, password) values(?, ?, ?)",
                 user.getUserid(), user.getUsername(), user.getPassword());
     }
 
