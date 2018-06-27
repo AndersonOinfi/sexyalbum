@@ -18,3 +18,16 @@ CREATE TABLE `album` (
   CONSTRAINT user_fk FOREIGN KEY(userid) REFERENCES a_user(id)
   PRIMARY KEY (`id`)
 );
+
+-- Create syntax for TABLE 'ele'
+CREATE TABLE `ele` (
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT ,
+  `source` VARCHAR(40) DEFAULT NULL ,
+  `description` VARCHAR(140) DEFAULT NULL
+)
+
+-- Create mapping relation from TABLE 'album' to TABLE 'ele'
+CREATE TABLE `relation` (
+  `albumid` BIGINT(20) NOT NULL AUTO_INCREMENT ,
+  `eleid` BIGINT(20) NOT NULL AUTO_INCREMENT
+)

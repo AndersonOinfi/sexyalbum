@@ -39,6 +39,14 @@ public class UserDaoImpl implements UserDao {
         else
             return null;
     }
+    public User find(String username){
+        List<User> user=template.query("select * from a_user where username=?",new Object[]{username},
+                new BeanPropertyRowMapper(User.class));
+        if(user!=null&&!user.isEmpty())
+            return user.get(0);
+        else
+            return null;
+    }
 
     @Override
     public List<User> findList() {
