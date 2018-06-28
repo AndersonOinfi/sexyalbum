@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.sexyalbum</groupId>
-    <artifactId>sexyweb</artifactId>
+    <artifactId>sexyalbum</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>sexyweb</name>
+    <name>sexyalbum</name>
     <description>a sexy album for Spring Boot</description>
 
     <parent>
