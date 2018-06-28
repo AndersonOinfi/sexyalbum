@@ -9,6 +9,9 @@ public interface UserDao {
     int update(User user);
     int delete(User user);
     User find(Long id);
+
+    User find(String username);
+
     //todo
     List<User> findList();
 

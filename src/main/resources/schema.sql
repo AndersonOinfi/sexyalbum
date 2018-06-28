@@ -1,9 +1,9 @@
 -- 建库脚本
 
 -- Create DataBase
-CREATE DATABASE IF NOT EXISTS `sexyalbum`;
+-- CREATE DATABASE IF NOT EXISTS `sexyalbum`;
 
-USE `sexyalbum`;
+-- USE `sexyalbum`;
 
 -- clear context
 DROP TABLE IF EXISTS `album_user`;
@@ -30,7 +30,7 @@ CREATE TABLE `album` (
 
 -- Create syntax for TABLE 'ele'
 CREATE TABLE `ele` (
-  `eleid` BIGINT(20) NOT NULL AUTO_INCREMENT ,
+  `eleid` BIGINT(20) NOT NULL ,
   `source` VARCHAR(40) DEFAULT NULL ,
   `description` VARCHAR(140) DEFAULT NULL ,
   PRIMARY KEY (`eleid`)
@@ -38,8 +38,7 @@ CREATE TABLE `ele` (
 
 -- Create mapping relation from TABLE 'album' to TABLE 'ele'
 CREATE TABLE `relation` (
-  `relationid` BIGINT(20) NOT NULL AUTO_INCREMENT ,
+  -- `relationid` BIGINT(20) NOT NULL AUTO_INCREMENT ,
   `albumid` BIGINT(20) NOT NULL ,
-  `eleid` BIGINT(20) NOT NULL ,
-  PRIMARY KEY (`relationid`)
+  `eleid` BIGINT(20) NOT NULL
 )

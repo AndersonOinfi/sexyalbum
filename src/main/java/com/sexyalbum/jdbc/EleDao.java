@@ -8,8 +8,7 @@ public interface EleDao {
     int add(AlbumElementable user);
     int update(AlbumElementable user);
     int delete(Long id);
-    AlbumElementable find(Long id);
-    List<AlbumElementable> findAlbumElesList(Long albumid);
+    String find(Long id);
 
-    List<AlbumElementable> findWholeEleList(Long albumid);
+    List<String> findWholeEleList();
 }

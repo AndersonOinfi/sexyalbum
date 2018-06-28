@@ -6,7 +6,8 @@ public class Album {
     private Long albumid;
     private Long userid;
     private String albumName;
-    private ArrayList<AlbumElementable> eleList;
+
+    // private ArrayList<AlbumElementable> eleList;
 
     public Album(){}
 
@@ -14,7 +15,7 @@ public class Album {
         this.albumid=null;
         this.userid=userid;
         this.albumName=albumName;
-        eleList=new ArrayList<>();
+        //eleList=new ArrayList<>();
         //todo
     }
 
@@ -22,10 +23,10 @@ public class Album {
         return albumid;
     }
 
-    /* 模型类的id不允许修改
+    // 模型类的id不允许修改
     public void setAlbumid(Long albumid) {
         this.albumid = albumid;
-    }*/
+    }
 
     public Long getUserid() {
         return userid;
@@ -41,13 +42,5 @@ public class Album {
 
     public void setAlbumName(String albumName) {
         this.albumName = albumName;
-    }
-
-    public ArrayList<AlbumElementable> getEleList() {
-        return eleList;
-    }
-
-    public void setEleList(ArrayList<AlbumElementable> eleList) {
-        this.eleList = eleList;
     }
 }

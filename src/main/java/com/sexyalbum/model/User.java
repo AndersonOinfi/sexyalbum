@@ -6,6 +6,7 @@ public class User {
     private Long userid;
     private String username;
     private String password;
+
     private ArrayList<Album> albums;
 
     public User() {
@@ -22,10 +23,10 @@ public class User {
         return userid;
     }
 
-    /* 模型类的id不允许修改
+    // 模型类的id不允许直接修改
     public void setUserid(Long userid) {
         this.userid = userid;
-    }*/
+    }
 
     public String getUsername() {
         return username;

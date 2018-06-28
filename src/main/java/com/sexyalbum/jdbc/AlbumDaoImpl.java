@@ -30,7 +30,6 @@ public class AlbumDaoImpl implements AlbumDao {
         return template.update("delete album where albumid=?", album.getAlbumid());
     }
 
-    // todo 数据库中并没有存储所有信息，是否能生成实例有待测试
     @Override
     public Album find(Long id) {
         List<Album> album=template.query("select * from album where albumid=?", new Object[]{id},
