@@ -1,9 +1,9 @@
 -- 建库脚本
 
 -- Create DataBase
--- CREATE DATABASE IF NOT EXISTS `sexyalbum`;
+CREATE DATABASE IF NOT EXISTS `sexyalbum`;
 
--- USE `sexyalbum`;
+USE `sexyalbum`;
 
 -- clear context
 DROP TABLE IF EXISTS `album_user`;

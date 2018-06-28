@@ -29,8 +29,8 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public int delete(User user) {
-        return template.update("delete from album_user where userid=?", user.getUserid());
+    public int delete(Long userid) {
+        return template.update("delete from album_user where userid=?", userid);
     }
 
     //todo

@@ -26,13 +26,13 @@ public class AlbumDaoImpl implements AlbumDao {
     }
 
     @Override
-    public int delete(Album album) {
-        return template.update("delete album where albumid=?", album.getAlbumid());
+    public int delete(Long albumid) {
+        return template.update("delete from album where albumid=?", albumid);
     }
 
     @Override
-    public Album find(Long id) {
-        List<Album> album=template.query("select * from album where albumid=?", new Object[]{id},
+    public Album find(Long albumid) {
+        List<Album> album=template.query("select * from album where albumid=?", new Object[]{albumid},
                 new BeanPropertyRowMapper(Album.class));
         if(album!=null&&!album.isEmpty())
             return album.get(0);

@@ -2,7 +2,7 @@ package com.sexyalbum.model;
 
 public class Relation {
     private Long albumid;
-    private Long elesid;
+    private Long eleid;
 
     public Long getAlbumid() {
         return albumid;
@@ -12,11 +12,11 @@ public class Relation {
         this.albumid = albumid;
     }
 
-    public Long getElesid() {
-        return elesid;
+    public Long getEleid() {
+        return eleid;
     }
 
-    public void setElesid(Long elesid) {
-        this.elesid = elesid;
+    public void setEleid(Long eleid) {
+        this.eleid = eleid;
     }
 }

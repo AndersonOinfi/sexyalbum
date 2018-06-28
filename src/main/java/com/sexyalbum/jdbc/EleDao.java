@@ -1,14 +1,14 @@
 package com.sexyalbum.jdbc;
 
-import com.sexyalbum.model.AlbumElementable;
+import com.sexyalbum.model.Ele;
 
 import java.util.List;
 
 public interface EleDao {
-    int add(AlbumElementable user);
-    int update(AlbumElementable user);
-    int delete(Long id);
-    String find(Long id);
+    int add(Ele ele);
+    int update(Ele ele);
+    int delete(Long eleid);
+    Ele find(Long eleid);
 
-    List<String> findWholeEleList();
+    List<Ele> findWholeEleList();
 }

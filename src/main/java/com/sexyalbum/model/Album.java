@@ -7,7 +7,7 @@ public class Album {
     private Long userid;
     private String albumName;
 
-    // private ArrayList<AlbumElementable> eleList;
+    private ArrayList<Ele> eleList;
 
     public Album(){}
 

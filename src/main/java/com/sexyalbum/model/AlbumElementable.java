@@ -1,3 +1,4 @@
+/*
 package com.sexyalbum.model;
 
 public interface AlbumElementable {
@@ -8,3 +9,4 @@ public interface AlbumElementable {
     // 资源描述信息
     String getDescription();
 }
+*/
