@@ -14,12 +14,14 @@ public class UserDaoImpl implements UserDao {
     private JdbcTemplate template;
 
     @Override
-    public int add(User user) {
+    public Long add(User user) {
         if(find(user.getUsername())!=null)
-            return -1;
-        else
-            return  template.update("insert into album_user(userid, username, password) values(?, ?, ?)",
-                user.getUserid(), user.getUsername(), user.getPassword());
+            return null;
+        else {
+            template.update("insert into album_user(userid, username, password) values(?, ?, ?)",
+                    user.getUserid(), user.getUsername(), user.getPassword());
+            return find(user.getUsername()).getUserid();
+        }
     }
 
     @Override

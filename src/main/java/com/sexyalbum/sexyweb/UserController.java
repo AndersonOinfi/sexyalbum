@@ -1,18 +1,25 @@
 package com.sexyalbum.sexyweb;
 
+import com.sexyalbum.model.User;
+import com.sexyalbum.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
+    @Autowired
+    private UserService userService;
+
     // get userinfo for current user
     @RequestMapping()
-    public String getUserInfo(){
-        //todo
-        return "user";
+    @ResponseBody
+    public User getUserInfo(@SessionAttribute Long userid){
+        return userService.getUser(userid);
     }
 
     // get your followers' list
@@ -49,8 +56,15 @@ public class UserController {
         return null;
     }
     @RequestMapping(value = "/account/signup")
-    public String signupUserAccount(){
-        return null;
+    @ResponseBody
+    public Long signupUserAccount(@RequestParam String username, @RequestParam String password, HttpSession session){
+        User user=new User(username,password);
+        Long userid=userService.createUser(user);
+        if(userid!=null){
+            user.setUserid(userid);
+            session.setAttribute("currentuser",user);
+        }
+        return userid;
     }
 
     // user password management
