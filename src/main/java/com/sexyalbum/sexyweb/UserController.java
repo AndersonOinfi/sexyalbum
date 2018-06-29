@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 
-@Controller
+@RestController
 @RequestMapping("/user")
 public class UserController {
     @Autowired
@@ -18,8 +18,8 @@ public class UserController {
     // get userinfo for current user
     @RequestMapping()
     @ResponseBody
-    public User getUserInfo(@SessionAttribute Long userid){
-        return userService.getUser(userid);
+    public User getUserInfo(@SessionAttribute User currentuser){
+        return currentuser;
     }
 
     // get your followers' list
@@ -47,16 +47,22 @@ public class UserController {
     }
 
     // current user account management
+    // nothing to edit now
     @RequestMapping(value = "/account/edit")
     public String editUserAccount(){
         return null;
     }
     @RequestMapping(value = "/account/login")
-    public String loginUserAccount(){
-        return null;
+    public Long loginUserAccount(@RequestParam String username, @RequestParam String password, HttpSession session){
+        User user=new User(username,password);
+        Long userid=userService.verifyUser(user);
+        if(userid!=null) {
+            user.setUserid(userid);
+            session.setAttribute("currentuser",user);
+        }
+        return userid;
     }
     @RequestMapping(value = "/account/signup")
-    @ResponseBody
     public Long signupUserAccount(@RequestParam String username, @RequestParam String password, HttpSession session){
         User user=new User(username,password);
         Long userid=userService.createUser(user);
@@ -69,7 +75,8 @@ public class UserController {
 
     // user password management
     @RequestMapping(value = "/password/change")
-    public String changeUserPassword(){
-        return null;
+    public int changeUserPassword(@RequestParam String password, @SessionAttribute User currentUser){
+        currentUser.setPassword(password);
+        return userService.updateUser(currentUser);
     }
 }

@@ -29,4 +29,15 @@ public class UserServiceImpl implements UserService {
     public User getUser(Long userid) {
         return userDao.find(userid);
     }
+
+    @Override
+    public Long verifyUser(User user) {
+        User userInfo=null;
+        if(user!=null)
+            userInfo=userDao.find(user.getUsername());
+        if(userInfo!=null)
+            if(user.getPassword().equals(userInfo.getPassword()))
+                return userInfo.getUserid();
+        return null;
+    }
 }
