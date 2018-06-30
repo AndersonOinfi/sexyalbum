@@ -43,4 +43,12 @@ public class Album {
     public void setAlbumName(String albumName) {
         this.albumName = albumName;
     }
+
+    public ArrayList<Ele> getEleList() {
+        return eleList;
+    }
+
+    public void setEleList(ArrayList<Ele> eleList) {
+        this.eleList = eleList;
+    }
 }

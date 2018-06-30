@@ -28,7 +28,7 @@ public class LoginFilter implements Filter {
             if (loginSuccess && (currentUser = (User) session.getAttribute("currentuser")) == null)
                 loginSuccess = false;
             if (!loginSuccess)
-                ((HttpServletResponse) servletResponse).sendRedirect("/login.html");
+                ((HttpServletResponse) servletResponse).sendRedirect("/template/login.html");
         }
         filterChain.doFilter(servletRequest,servletResponse);
     }

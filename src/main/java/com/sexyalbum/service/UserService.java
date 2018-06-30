@@ -11,6 +11,7 @@ public interface UserService {
     int deleteUser(User user);
     // 获取用户实例
     User getUser(Long userid);
+    User getUser(String userid);
     // 验证用户
     Long verifyUser(User user);
     // todo

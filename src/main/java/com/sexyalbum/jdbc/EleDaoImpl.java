@@ -4,9 +4,14 @@ import com.sexyalbum.model.Ele;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -17,9 +22,19 @@ public class EleDaoImpl implements EleDao {
     private JdbcTemplate template;
 
     @Override
-    public int add(Ele ele) {
-        return template.update("insert into ele(eleid, source, description) values(?, ?, ?)",
-                ele.getEleid(), ele.getSource(), ele.getDescription());
+    public Long add(Ele ele) {
+        KeyHolder keyHolder=new GeneratedKeyHolder();
+        template.update(new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                PreparedStatement ps = connection.prepareStatement(
+                        "insert into ele(eleid, source, description) values(?, ?, ?)");
+                ps.setString(1,ele.getSource());
+                ps.setString(2,ele.getDescription());
+                return ps;
+            }
+        }, keyHolder);
+        return keyHolder.getKey().longValue();
     }
 
     // 相册元素暂不提供修改功能

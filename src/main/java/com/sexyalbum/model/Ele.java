@@ -3,7 +3,7 @@ package com.sexyalbum.model;
 import com.sexyalbum.utils.Constant;
 
 public class Ele {
-    private String PATH;
+    private String prePath;
 
     private Long eleid;
     private String source;
@@ -13,10 +13,10 @@ public class Ele {
 
     // image ele constructor
     public Ele(String type, String description) {
-        this.PATH=Constant.IMAGE_PATH;
+        this.prePath =Constant.IMAGE_PATH;
         this.eleid = null;//todo
         this.type = type;
-        //this.source=PATH+ eleid +type;
+        //this.source=prePath+ eleid +type;
         this.description=description;
     }
 
@@ -25,8 +25,8 @@ public class Ele {
         this.description = description;
     }
 
-    public String getPATH() {
-        return PATH;
+    public String getPrePath() {
+        return prePath;
     }
 
     public String getType() {
@@ -39,6 +39,7 @@ public class Ele {
 
     public void setEleid(Long eleid) {
         this.eleid = eleid;
+        this.source=prePath+ eleid +type;
     }
 
     public String getSource() {

@@ -4,6 +4,11 @@ public class Relation {
     private Long albumid;
     private Long eleid;
 
+    public Relation(Long albumid, Long eleid) {
+        this.albumid = albumid;
+        this.eleid = eleid;
+    }
+
     public Long getAlbumid() {
         return albumid;
     }

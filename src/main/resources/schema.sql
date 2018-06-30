@@ -14,7 +14,7 @@ DROP TABLE IF EXISTS `relation`;
 -- Create syntax for TABLE 'album_user'
 CREATE TABLE `album_user` (
   `userid` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `username` VARCHAR(20) DEFAULT NULL ,
+  `username` VARCHAR(20) UNIQUE DEFAULT NULL ,
   `password` VARCHAR(20) DEFAULT NULL ,
   PRIMARY KEY (`userid`)
 );
@@ -30,7 +30,7 @@ CREATE TABLE `album` (
 
 -- Create syntax for TABLE 'ele'
 CREATE TABLE `ele` (
-  `eleid` BIGINT(20) NOT NULL ,
+  `eleid` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `source` VARCHAR(40) DEFAULT NULL ,
   `description` VARCHAR(140) DEFAULT NULL ,
   PRIMARY KEY (`eleid`)

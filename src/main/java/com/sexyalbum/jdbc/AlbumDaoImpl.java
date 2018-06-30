@@ -4,8 +4,14 @@ import com.sexyalbum.model.Album;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 @Repository
@@ -14,9 +20,18 @@ public class AlbumDaoImpl implements AlbumDao {
     private JdbcTemplate template;
 
     @Override
-    public int add(Album album) {
-        return template.update("insert into album(albumid, userid, albumname) values(?, ?, ?)",
-                album.getAlbumid(), album.getUserid(), album.getAlbumName());
+    public Long add(Album album) {
+        KeyHolder keyHolder=new GeneratedKeyHolder();
+        template.update(new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                PreparedStatement ps = connection.prepareStatement("insert into album(albumid, userid, albumname) values(?, ?, ?)");
+                ps.setLong(1,album.getUserid());
+                ps.setString(2,album.getAlbumName());
+                return ps;
+            }
+        }, keyHolder);
+        return keyHolder.getKey().longValue();
     }
 
     @Override

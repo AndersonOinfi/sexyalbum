@@ -4,8 +4,14 @@ import com.sexyalbum.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 @Repository
@@ -15,13 +21,18 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public Long add(User user) {
-        if(find(user.getUsername())!=null)
-            return null;
-        else {
-            template.update("insert into album_user(userid, username, password) values(?, ?, ?)",
-                    user.getUserid(), user.getUsername(), user.getPassword());
-            return find(user.getUsername()).getUserid();
-        }
+        KeyHolder keyHolder=new GeneratedKeyHolder();
+        template.update(new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                PreparedStatement ps = connection.prepareStatement(
+                        "insert into album_user(userid, username, password) values(?, ?, ?)");
+                ps.setString(1,user.getUsername());
+                ps.setString(2,user.getPassword());
+                return ps;
+            }
+        }, keyHolder);
+        return keyHolder.getKey().longValue();
     }
 
     @Override
