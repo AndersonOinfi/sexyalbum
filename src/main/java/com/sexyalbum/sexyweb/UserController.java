@@ -114,17 +114,16 @@ public class UserController {
     public Long addAlbumEle(@RequestParam(name = "albumid") Long albumid,
                             @RequestParam(name = "ele-file") MultipartFile file,
                             @RequestParam(name = "description") String eleDescription){
-        String type=file.getContentType();
+        String type=file.getContentType().replaceAll("image/","");
         Ele ele=new Ele(type,eleDescription);
-        Long eleid=albumService.addAlbumEle(albumid,ele);
-        if(eleid!=null) {
-            ele.setEleid(eleid);
+        if(ele.getEleid()!=null) {
             try {
                 FileSaver.Save(file.getBytes(), ele.getSource());
             } catch (IOException e) {
                 e.printStackTrace();
+                return null;
             }
         }
-        return eleid;
+        return albumService.addAlbumEle(albumid,ele);
     }
 }

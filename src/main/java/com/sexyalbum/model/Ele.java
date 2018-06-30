@@ -14,9 +14,9 @@ public class Ele {
     // image ele constructor
     public Ele(String type, String description) {
         this.prePath =Constant.IMAGE_PATH;
-        this.eleid = null;//todo
+        this.eleid = System.currentTimeMillis();
         this.type = type;
-        //this.source=prePath+ eleid +type;
+        this.source=prePath+ eleid +"."+type;
         this.description=description;
     }
 
@@ -39,7 +39,6 @@ public class Ele {
 
     public void setEleid(Long eleid) {
         this.eleid = eleid;
-        this.source=prePath+ eleid +type;
     }
 
     public String getSource() {
