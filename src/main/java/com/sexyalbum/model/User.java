@@ -19,6 +19,12 @@ public class User {
         //todo
     }
 
+    public User(User user){
+        this.userid=user.getUserid();
+        this.username=user.getUsername();
+        this.password=user.getPassword();
+    }
+
     public Long getUserid() {
         return userid;
     }

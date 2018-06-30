@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 import java.io.*;
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/user")
@@ -24,10 +25,12 @@ public class UserController {
     private AlbumService albumService;
 
     // get userinfo for current user
-    @RequestMapping()
+    @RequestMapping(value = "")
     public User getUserInfo(@SessionAttribute User currentuser){
-        // todo return whole userinfo
-        return currentuser;
+        User user=new User(currentuser);
+        ArrayList<Album> albums=new ArrayList<>(albumService.getUserAlbums(user.getUserid()));
+        user.setAlbums(albums);
+        return user;
     }
 
     // get your followers' list
@@ -95,8 +98,8 @@ public class UserController {
 
     // user album management
     @RequestMapping(value = "/album")
-    public Album getAlbumInfo(){
-        return null;
+    public Album getAlbumInfo(@RequestParam Long albumid){
+        return albumService.getAlbum(albumid);
     }
     @RequestMapping(value = "/album/create")
     public Long createAlbum(@RequestParam(name = "albumname") String albumName,

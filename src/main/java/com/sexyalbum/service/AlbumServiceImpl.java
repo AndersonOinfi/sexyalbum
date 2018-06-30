@@ -61,9 +61,11 @@ public class AlbumServiceImpl implements AlbumService {
                 continue;
             List<Long> elesid=relationDao.findAlbumElesList(album.getAlbumid());
             ArrayList<Ele> eles=new ArrayList<>();
-            for (Long id:
-                 elesid) {
-                eles.add(eleDao.find(id));
+            if(elesid!=null&&!elesid.isEmpty()) {
+                for (Long id :
+                        elesid) {
+                    eles.add(eleDao.find(id));
+                }
             }
             album.setEleList(eles);
         }
