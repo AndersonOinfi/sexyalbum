@@ -25,7 +25,8 @@ public class AlbumDaoImpl implements AlbumDao {
         template.update(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement("insert into album(albumid, userid, albumname) values(?, ?, ?)");
+                PreparedStatement ps = connection.prepareStatement(
+                        "insert into album(userid, albumname) values(?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
                 ps.setLong(1,album.getUserid());
                 ps.setString(2,album.getAlbumName());
                 return ps;

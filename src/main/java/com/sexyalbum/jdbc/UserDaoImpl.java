@@ -26,7 +26,7 @@ public class UserDaoImpl implements UserDao {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
                 PreparedStatement ps = connection.prepareStatement(
-                        "insert into album_user(userid, username, password) values(?, ?, ?)");
+                        "insert into album_user(username, password) values(?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
                 ps.setString(1,user.getUsername());
                 ps.setString(2,user.getPassword());
                 return ps;

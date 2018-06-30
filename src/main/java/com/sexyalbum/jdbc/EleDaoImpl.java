@@ -28,7 +28,7 @@ public class EleDaoImpl implements EleDao {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
                 PreparedStatement ps = connection.prepareStatement(
-                        "insert into ele(eleid, source, description) values(?, ?, ?)");
+                        "insert into ele(source, description) values(?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
                 ps.setString(1,ele.getSource());
                 ps.setString(2,ele.getDescription());
                 return ps;
