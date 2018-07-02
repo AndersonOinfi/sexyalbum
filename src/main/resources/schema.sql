@@ -58,9 +58,21 @@ CREATE TABLE `user_relation` (
 );
 
 -- Create mapping relation from TABLE 'album_user' to  TABLE 'ele'
-CREATE TABLE like_relation (
+CREATE TABLE `like_relation` (
   `userid` BIGINT(20) NOT NULL ,
   `eleid` BIGINT(20) NOT NULL ,
   FOREIGN KEY (userid) REFERENCES album_user(userid) ,
   FOREIGN KEY (eleid) REFERENCES ele(eleid)
+);
+
+-- Create mapping relation from TABLE 'ele' to TABLE 'album_user'
+CREATE TABLE `comment` (
+  `commentid` BIGINT(20) NOT NULL AUTO_INCREMENT ,
+  `eleid` BIGINT(20) NOT NULL ,
+  `userid` BIGINT(20) NOT NULL ,
+  `tarid` BIGINT(20) DEFAULT NULL ,
+  `comments` VARCHAR(140) ,
+  PRIMARY KEY (commentid) ,
+  FOREIGN KEY (eleid) REFERENCES ele(eleid) ,
+  FOREIGN KEY (userid) REFERENCES album_user(userid)
 )

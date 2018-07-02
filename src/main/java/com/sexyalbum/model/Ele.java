@@ -16,7 +16,7 @@ public class Ele {
 
     // image ele constructor
     public Ele(String type, String description) {
-        this.prePath =Constant.IMAGE_PATH;
+        this.prePath =Constant.IMAGE_PREPATH;
         this.eleid = System.currentTimeMillis();
         this.type = type;
         this.source=eleid +"."+type;

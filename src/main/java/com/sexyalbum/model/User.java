@@ -19,7 +19,7 @@ public class User {
         this.userid=null;
         this.username = username;
         this.password = password;
-        this.avatarPath=Constant.DEAULT_AVATAR;
+        this.avatarPath=Constant.DEFAULT_AVATAR;
         //todo
     }
 
