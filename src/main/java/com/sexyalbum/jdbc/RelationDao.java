@@ -11,5 +11,5 @@ public interface RelationDao {
     int deleteAlbumEles(Long albumid);
     List<Long> findAlbumElesList(Long albumid);
 
-    List<Relation> findWholeEleList();
+    List<Relation> findWholeRelationList();
 }

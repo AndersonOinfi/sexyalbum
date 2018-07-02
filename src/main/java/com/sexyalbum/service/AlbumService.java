@@ -16,6 +16,9 @@ public interface AlbumService {
     Album getAlbum(Long albumid);
     // 获取指定用户的所有相册
     List<Album> getUserAlbums(Long userid);
+
+    List<Ele> getUserEles(Long userid);
+
     // 向指定相册中添加元素
     Long addAlbumEle(Long albumid,Ele ele);
     // 删除指定相册中的指定元素

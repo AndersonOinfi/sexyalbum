@@ -41,4 +41,10 @@ CREATE TABLE `relation` (
   -- `relationid` BIGINT(20) NOT NULL AUTO_INCREMENT ,
   `albumid` BIGINT(20) NOT NULL ,
   `eleid` BIGINT(20) NOT NULL
+);
+
+-- Create mapping relation from TABLE 'album_user' to TABLE 'album_user'
+CREATE TABLE `user_relation` (
+  `userid` BIGINT(20) NOT NULL ,
+  `friendid` BIGINT(20) NOT NULL
 )

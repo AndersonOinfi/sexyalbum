@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Repository
@@ -55,21 +56,46 @@ public class AlbumServiceImpl implements AlbumService {
     @Override
     public List<Album> getUserAlbums(Long userid) {
         List<Album> albums=albumDao.findUserAlbumsList(userid);
-        for (Album album:
-             albums) {
-            if(album==null)
-                continue;
-            List<Long> elesid=relationDao.findAlbumElesList(album.getAlbumid());
-            ArrayList<Ele> eles=new ArrayList<>();
-            if(elesid!=null&&!elesid.isEmpty()) {
-                for (Long id :
-                        elesid) {
-                    eles.add(eleDao.find(id));
+        if(albums!=null&&!albums.isEmpty()) {
+            for (Album album :
+                    albums) {
+                List<Long> elesid = relationDao.findAlbumElesList(album.getAlbumid());
+                ArrayList<Ele> eles = new ArrayList<>();
+                if (elesid != null && !elesid.isEmpty()) {
+                    for (Long id :
+                            elesid) {
+                        eles.add(eleDao.find(id));
+                    }
                 }
+                album.setEleList(eles);
             }
-            album.setEleList(eles);
         }
         return albums;
+    }
+
+    @Override
+    public List<Ele> getUserEles(Long userid) {
+        List<Album> albums=albumDao.findUserAlbumsList(userid);
+        ArrayList<Ele> eles=new ArrayList<>();
+        if(albums!=null&&!albums.isEmpty()) {
+            for (Album album :
+                    albums) {
+                List<Long> elesid = relationDao.findAlbumElesList(album.getAlbumid());
+                if (elesid != null && !elesid.isEmpty()) {
+                    for (Long id :
+                            elesid) {
+                        eles.add(eleDao.find(id));
+                    }
+                }
+            }
+        }
+        eles.sort(new Comparator<Ele>() {
+            @Override
+            public int compare(Ele o1, Ele o2) {
+                return o1.getEleid().compareTo(o2.getEleid());
+            }
+        });
+        return eles.subList(0,eles.size());
     }
 
     @Override

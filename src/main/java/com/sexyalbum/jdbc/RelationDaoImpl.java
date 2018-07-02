@@ -55,7 +55,7 @@ public class RelationDaoImpl implements RelationDao {
     }
 
     @Override
-    public List<Relation> findWholeEleList() {
+    public List<Relation> findWholeRelationList() {
         List<Relation> elesid=template.query("select * from relation where albumid=?", new Object[]{},
                 new BeanPropertyRowMapper<>(Relation.class));
         if(elesid!=null&&!elesid.isEmpty())

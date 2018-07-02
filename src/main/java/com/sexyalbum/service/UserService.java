@@ -2,6 +2,8 @@ package com.sexyalbum.service;
 
 import com.sexyalbum.model.User;
 
+import java.util.List;
+
 public interface UserService {
     // 初始化用户数据
     Long createUser(User user);
@@ -12,6 +14,17 @@ public interface UserService {
     // 获取用户实例
     User getUser(Long userid);
     User getUser(String userid);
+
+    int addFriend(Long userid, Long friendid);
+
+    int deleteFriend(Long userid, Long friendid);
+
+    int deleteUserFriends(Long userid);
+
+    List<Long> getFollowers(Long userid);
+
+    List<Long> getFollowings(Long userid);
+
     // 验证用户
     Long verifyUser(User user);
     // todo

@@ -15,6 +15,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -33,16 +34,24 @@ public class UserController {
         return user;
     }
 
+    // add a friend/following
+    @RequestMapping(value = "/follow")
+    public int follow(@RequestParam(name = "friendid") Long friendid,
+                      @SessionAttribute(name = "currentuser") User currentuser) {
+        return userService.addFriend(currentuser.getUserid(), friendid);
+    }
+
     // get your followers' list
     @RequestMapping(value = "/followers")
-    public String getUserFollowers(){
-        return null;
+    public List<Long> getUserFollowers(@SessionAttribute(name = "currentuser") User currentuser){
+        // todo
+        return userService.getFollowers(currentuser.getUserid());
     }
 
     // get your following's list
     @RequestMapping(value = "/following")
-    public String getUserFollowing(){
-        return null;
+    public List<Long> getUserFollowing(@SessionAttribute(name = "currentuser") User currentuser){
+        return userService.getFollowings(currentuser.getUserid());
     }
 
     // get your saved eles' list
@@ -61,6 +70,7 @@ public class UserController {
     // nothing to edit now
     @RequestMapping(value = "/account/edit")
     public String editUserAccount(){
+        // todo update session
         return null;
     }
     @RequestMapping(value = "/account/login")
