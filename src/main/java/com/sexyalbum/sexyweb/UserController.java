@@ -49,7 +49,7 @@ public class UserController {
     }
 
     // get your following's list
-    @RequestMapping(value = "/following")
+    @RequestMapping(value = "/followings")
     public List<Long> getUserFollowing(@SessionAttribute(name = "currentuser") User currentuser){
         return userService.getFollowings(currentuser.getUserid());
     }
