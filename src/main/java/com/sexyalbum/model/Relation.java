@@ -4,6 +4,9 @@ public class Relation {
     private Long albumid;
     private Long eleid;
 
+    public Relation() {
+    }
+
     public Relation(Long albumid, Long eleid) {
         this.albumid = albumid;
         this.eleid = eleid;

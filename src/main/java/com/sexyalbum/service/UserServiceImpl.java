@@ -1,7 +1,9 @@
 package com.sexyalbum.service;
 
+import com.sexyalbum.jdbc.LikeRelationDao;
 import com.sexyalbum.jdbc.UserDao;
 import com.sexyalbum.jdbc.UserRelationDao;
+import com.sexyalbum.model.LikeRelation;
 import com.sexyalbum.model.User;
 import com.sexyalbum.model.UserRelation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,8 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
     @Autowired
     private UserRelationDao userRelationDao;
+    @Autowired
+    private LikeRelationDao likeRelationDao;
 
     @Override
     public Long createUser(User user) {
@@ -41,6 +45,7 @@ public class UserServiceImpl implements UserService {
         return userDao.find(username);
     }
 
+    // friend/following service
     @Override
     public int addFriend(Long userid, Long friendid) {
         return userRelationDao.add(new UserRelation(userid, friendid));
@@ -64,6 +69,28 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<Long> getFollowings(Long userid) {
         return userRelationDao.findUserFollowings(userid);
+    }
+
+    // like service
+    @Override
+    public int likeEle(Long userid, Long eleid) {
+        return likeRelationDao.add(new LikeRelation(userid, eleid));
+    }
+
+    @Override
+    public int cancelLike(Long userid, Long eleid) {
+        return likeRelationDao.delete(new LikeRelation(userid, eleid));
+    }
+    // todo big cancel
+
+    @Override
+    public List<Long> getUserLikes(Long userid) {
+        return likeRelationDao.findUserLikes(userid);
+    }
+
+    @Override
+    public List<Long> getEleLikers(Long eleid) {
+        return likeRelationDao.findEleLikers(eleid);
     }
 
     @Override

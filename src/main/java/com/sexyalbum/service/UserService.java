@@ -25,6 +25,15 @@ public interface UserService {
 
     List<Long> getFollowings(Long userid);
 
+    // like service
+    int likeEle(Long userid, Long eleid);
+
+    int cancelLike(Long userid, Long eleid);
+
+    List<Long> getUserLikes(Long userid);
+
+    List<Long> getEleLikers(Long eleid);
+
     // 验证用户
     Long verifyUser(User user);
     // todo

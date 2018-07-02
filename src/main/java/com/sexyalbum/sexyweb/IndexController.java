@@ -18,7 +18,7 @@ public class IndexController {
     @Autowired
     private AlbumService albumService;
 
-    private static int length=10;
+    private static int length=1;
 
     @RequestMapping(value = "/hello")
     public String Hello(){
@@ -27,8 +27,8 @@ public class IndexController {
 
     @RequestMapping(value = "")
     public List<Ele> index(@RequestParam(name = "offset", defaultValue = "0") int offset,
-                       @SessionAttribute(name = "currentuser") User currentuser){
-        Album album=new Album();
+                           @SessionAttribute(name = "currentuser") User currentuser){
+        // Album album=new Album();
         // todo User[] users=;
         List<Ele> eles=albumService.getUserEles(currentuser.getUserid());
         return eles.subList(offset,length);

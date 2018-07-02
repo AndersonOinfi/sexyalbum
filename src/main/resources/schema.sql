@@ -1,15 +1,20 @@
 -- 建库脚本
 
 -- Create DataBase
-CREATE DATABASE IF NOT EXISTS `sexyalbum`;
+DROP DATABASE IF EXISTS `sexyalbum`;
+CREATE DATABASE `sexyalbum`;
 
 USE `sexyalbum`;
 
 -- clear context
+/*
 DROP TABLE IF EXISTS `album_user`;
 DROP TABLE IF EXISTS `album`;
 DROP TABLE IF EXISTS `ele`;
 DROP TABLE IF EXISTS `relation`;
+DROP TABLE IF EXISTS `user_relation`;
+DROP TABLE IF EXISTS `save_relation`;
+*/
 
 -- Create syntax for TABLE 'album_user'
 CREATE TABLE `album_user` (
@@ -24,8 +29,8 @@ CREATE TABLE `album` (
   `albumid` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `userid` BIGINT(20) NOT NULL ,
   `albumname` VARCHAR(255) DEFAULT NULL ,
-  -- CONSTRAINT user_fk FOREIGN KEY(userid) REFERENCES a_user(id) ,
-  PRIMARY KEY (`albumid`)
+  PRIMARY KEY (`albumid`) ,
+  FOREIGN KEY (userid) REFERENCES album_user(userid)
 );
 
 -- Create syntax for TABLE 'ele'
@@ -38,13 +43,23 @@ CREATE TABLE `ele` (
 
 -- Create mapping relation from TABLE 'album' to TABLE 'ele'
 CREATE TABLE `relation` (
-  -- `relationid` BIGINT(20) NOT NULL AUTO_INCREMENT ,
   `albumid` BIGINT(20) NOT NULL ,
-  `eleid` BIGINT(20) NOT NULL
+  `eleid` BIGINT(20) NOT NULL ,
+  FOREIGN KEY (albumid) REFERENCES album(albumid) ,
+  FOREIGN KEY (eleid) REFERENCES ele(eleid)
 );
 
 -- Create mapping relation from TABLE 'album_user' to TABLE 'album_user'
 CREATE TABLE `user_relation` (
   `userid` BIGINT(20) NOT NULL ,
-  `friendid` BIGINT(20) NOT NULL
+  `friendid` BIGINT(20) NOT NULL ,
+  FOREIGN KEY (userid) REFERENCES album_user(userid)
+);
+
+-- Create mapping relation from TABLE 'album_user' to  TABLE 'ele'
+CREATE TABLE like_relation (
+  `userid` BIGINT(20) NOT NULL ,
+  `eleid` BIGINT(20) NOT NULL ,
+  FOREIGN KEY (userid) REFERENCES album_user(userid) ,
+  FOREIGN KEY (eleid) REFERENCES ele(eleid)
 )

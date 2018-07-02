@@ -11,12 +11,15 @@ public class Ele {
     // like ".png"
     private String type;
 
+    public Ele() {
+    }
+
     // image ele constructor
     public Ele(String type, String description) {
         this.prePath =Constant.IMAGE_PATH;
         this.eleid = System.currentTimeMillis();
         this.type = type;
-        this.source=prePath+ eleid +"."+type;
+        this.source=eleid +"."+type;
         this.description=description;
     }
 

@@ -34,6 +34,30 @@ public class UserController {
         return user;
     }
 
+    // like a ele
+    @RequestMapping(value = "/like")
+    public int like(@RequestParam(name = "eleid") Long eleid,
+                    @SessionAttribute(name = "currentuser") User currentuser) {
+        return userService.likeEle(currentuser.getUserid(), eleid);
+    }
+
+    @RequestMapping(value = "/like/cancel")
+    public int cancelLike(@RequestParam(name = "eleid") Long eleid,
+                          @SessionAttribute(name = "currentuser") User currentuser) {
+        return userService.cancelLike(currentuser.getUserid(), eleid);
+    }
+
+    // todo dynamic inquire
+    @RequestMapping(value = "/like/likes")
+    public List<Long> getLikes(@RequestParam(name = "userid") Long userid) {
+        return userService.getUserLikes(userid);
+    }
+
+    @RequestMapping(value = "/like/likers")
+    public List<Long> getLikers(@RequestParam(name = "eleid") Long eleid) {
+        return userService.getEleLikers(eleid);
+    }
+
     // add a friend/following
     @RequestMapping(value = "/follow")
     public int follow(@RequestParam(name = "friendid") Long friendid,
@@ -101,19 +125,19 @@ public class UserController {
     // user password management
     @RequestMapping(value = "/password/change")
     public int changeUserPassword(@RequestParam(name = "password") String password,
-                                  @SessionAttribute User currentUser){
+                                  @SessionAttribute(name = "currentuser") User currentUser){
         currentUser.setPassword(password);
         return userService.updateUser(currentUser);
     }
 
     // user album management
     @RequestMapping(value = "/album")
-    public Album getAlbumInfo(@RequestParam Long albumid){
+    public Album getAlbumInfo(@RequestParam(name = "albumid") Long albumid){
         return albumService.getAlbum(albumid);
     }
     @RequestMapping(value = "/album/create")
     public Long createAlbum(@RequestParam(name = "albumname") String albumName,
-                            @SessionAttribute User currentuser){
+                            @SessionAttribute(name = "currentuser") User currentuser){
         return albumService.createAlbum(new Album(currentuser.getUserid(),albumName));
     }
     @RequestMapping(value = "/album/delete")
@@ -124,15 +148,14 @@ public class UserController {
     public Long addAlbumEle(@RequestParam(name = "albumid") Long albumid,
                             @RequestParam(name = "ele-file") MultipartFile file,
                             @RequestParam(name = "description") String eleDescription){
+        // todo else file types
         String type=file.getContentType().replaceAll("image/","");
         Ele ele=new Ele(type,eleDescription);
-        if(ele.getEleid()!=null) {
-            try {
-                FileSaver.Save(file.getBytes(), ele.getSource());
-            } catch (IOException e) {
-                e.printStackTrace();
-                return null;
-            }
+        try {
+            FileSaver.Save(file.getBytes(), ele.getPrePath()+ele.getSource());
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
         }
         return albumService.addAlbumEle(albumid,ele);
     }

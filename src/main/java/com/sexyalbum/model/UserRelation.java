@@ -4,6 +4,9 @@ public class UserRelation {
     private Long userid;
     private Long friendid;
 
+    public UserRelation() {
+    }
+
     public UserRelation(Long userid, Long friendid) {
         this.userid = userid;
         this.friendid = friendid;
