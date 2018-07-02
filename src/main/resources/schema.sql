@@ -21,6 +21,7 @@ CREATE TABLE `album_user` (
   `userid` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(20) UNIQUE DEFAULT NULL ,
   `password` VARCHAR(20) DEFAULT NULL ,
+  `avatar` VARCHAR(40) DEFAULT NULL ,
   PRIMARY KEY (`userid`)
 );
 

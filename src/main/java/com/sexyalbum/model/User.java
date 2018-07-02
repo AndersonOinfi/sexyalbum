@@ -1,11 +1,14 @@
 package com.sexyalbum.model;
 
+import com.sexyalbum.utils.Constant;
+
 import java.util.ArrayList;
 
 public class User {
     private Long userid;
     private String username;
     private String password;
+    private String avatarPath;
 
     private ArrayList<Album> albums;
 
@@ -16,6 +19,7 @@ public class User {
         this.userid=null;
         this.username = username;
         this.password = password;
+        this.avatarPath=Constant.DEAULT_AVATAR;
         //todo
     }
 
@@ -23,6 +27,7 @@ public class User {
         this.userid=user.getUserid();
         this.username=user.getUsername();
         this.password=user.getPassword();
+        this.avatarPath=user.getAvatarPath();
     }
 
     public Long getUserid() {
@@ -48,6 +53,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getAvatarPath() {
+        return avatarPath;
+    }
+
+    public void setAvatarPath(String avatarPath) {
+        this.avatarPath = avatarPath;
     }
 
     public ArrayList<Album> getAlbums() {

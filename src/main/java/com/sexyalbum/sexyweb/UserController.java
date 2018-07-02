@@ -47,14 +47,18 @@ public class UserController {
         return userService.cancelLike(currentuser.getUserid(), eleid);
     }
 
-    // todo dynamic inquire
     @RequestMapping(value = "/like/likes")
     public List<Long> getLikes(@RequestParam(name = "userid") Long userid) {
         return userService.getUserLikes(userid);
     }
+    @RequestMapping(value = "/like/likes")
+    public List<Long> getLikes(@SessionAttribute(name = "currentuser") User currentuser) {
+        return userService.getUserLikes(currentuser.getUserid());
+    }
 
     @RequestMapping(value = "/like/likers")
     public List<Long> getLikers(@RequestParam(name = "eleid") Long eleid) {
+        // todo
         return userService.getEleLikers(eleid);
     }
 
@@ -71,11 +75,20 @@ public class UserController {
         // todo
         return userService.getFollowers(currentuser.getUserid());
     }
+    @RequestMapping(value = "/followers")
+    public List<Long> getUserFollowers(@RequestParam(name = "userid") Long userid){
+        // todo
+        return userService.getFollowers(userid);
+    }
 
     // get your following's list
     @RequestMapping(value = "/followings")
     public List<Long> getUserFollowing(@SessionAttribute(name = "currentuser") User currentuser){
         return userService.getFollowings(currentuser.getUserid());
+    }
+    @RequestMapping(value = "/followings")
+    public List<Long> getUserFollowing(@RequestParam(name = "userid") Long userid){
+        return userService.getFollowings(userid);
     }
 
     // get your saved eles' list
