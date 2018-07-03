@@ -121,8 +121,9 @@ public class AlbumServiceImpl implements AlbumService {
     public Ele getEle(Long eleid) {
         Ele ele=eleDao.find(eleid);
         if(ele!=null) {
-            ArrayList<Comment> comments=new ArrayList<>(getEleComments(eleid));
-            ele.setComments(comments);
+            List<Comment> cs=getEleComments(eleid);
+            if(cs!=null)
+                ele.setComments(new ArrayList<>(cs));
         }
         return ele;
     }

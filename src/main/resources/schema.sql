@@ -54,7 +54,8 @@ CREATE TABLE `relation` (
 CREATE TABLE `user_relation` (
   `userid` BIGINT(20) NOT NULL ,
   `friendid` BIGINT(20) NOT NULL ,
-  FOREIGN KEY (userid) REFERENCES album_user(userid)
+  FOREIGN KEY (userid) REFERENCES album_user(userid) ,
+  FOREIGN KEY (friendid) REFERENCES album_user(userid)
 );
 
 -- Create mapping relation from TABLE 'album_user' to  TABLE 'ele'
@@ -65,7 +66,7 @@ CREATE TABLE `like_relation` (
   FOREIGN KEY (eleid) REFERENCES ele(eleid)
 );
 
--- Create mapping relation from TABLE 'ele' to TABLE 'album_user'
+-- Create syntax for TABLE 'comment'
 CREATE TABLE `comment` (
   `commentid` BIGINT(20) NOT NULL AUTO_INCREMENT ,
   `eleid` BIGINT(20) NOT NULL ,
@@ -75,4 +76,17 @@ CREATE TABLE `comment` (
   PRIMARY KEY (commentid) ,
   FOREIGN KEY (eleid) REFERENCES ele(eleid) ,
   FOREIGN KEY (userid) REFERENCES album_user(userid)
+);
+
+-- Create syntax for TABLE 'message'
+CREATE TABLE `message` (
+  `messageid` BIGINT(20) NOT NULL AUTO_INCREMENT ,
+  `userid` BIGINT(20) NOT NULL ,
+  `tarid` BIGINT(20) NOT NULL ,
+  `flag` BOOLEAN NOT NULL DEFAULT TRUE ,
+  `type` INT NOT NULL ,
+  `info` BIGINT(20) NOT NULL ,
+  PRIMARY KEY (messageid) ,
+  FOREIGN KEY (userid) REFERENCES album_user(userid) ,
+  FOREIGN KEY (tarid) REFERENCES album_user(userid)
 )
