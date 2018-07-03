@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 @Repository
@@ -25,7 +26,8 @@ public class MessageDaoImpl implements MessageDao {
         template.update(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps=connection.prepareStatement("insert into message(userid, tarid, type, info) values(?, ?, ?, ?)");
+                PreparedStatement ps=connection.prepareStatement("insert into message(userid, tarid, type, info) values(?, ?, ?, ?)",
+                        Statement.RETURN_GENERATED_KEYS);
                 ps.setLong(1, message.getUserid());
                 ps.setLong(2, message.getTarid());
                 ps.setInt(3, message.getType());

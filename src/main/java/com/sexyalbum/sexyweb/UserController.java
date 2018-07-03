@@ -202,16 +202,27 @@ public class UserController {
     @RequestMapping(value = "/album/addele")
     public Long addAlbumEle(@RequestParam(name = "albumid") Long albumid,
                             @RequestParam(name = "ele-file") MultipartFile file,
-                            @RequestParam(name = "description") String eleDescription){
+                            @RequestParam(name = "description") String eleDescription,
+                            @SessionAttribute(name = "currentuser") User currentuser) {
         // todo else file types
-        String type=file.getContentType().replaceAll("image/","");
-        Ele ele=new Ele(type,eleDescription);
+        String type = file.getContentType().replaceAll("image/", "");
+        Ele ele = new Ele(type, eleDescription);
         try {
-            FileSaver.Save(file.getBytes(), ele.getPrePath()+ele.getSource());
+            FileSaver.Save(file.getBytes(), ele.getPrePath() + ele.getSource());
         } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
-        return albumService.addAlbumEle(albumid,ele);
+        Long eleid=albumService.addAlbumEle(albumid, ele);
+        Long userid = currentuser.getUserid();
+        userService.createMessage(new Message(userid, userid, Message.ALBUM_MESSAGE, eleid));
+        List<Long> friends = currentuser.getFriends();
+        if (friends != null) {
+            for (Long friendid :
+                    friends) {
+                userService.createMessage(new Message(userid, friendid, Message.ALBUM_MESSAGE, albumid));
+            }
+        }
+        return eleid;
     }
 }
