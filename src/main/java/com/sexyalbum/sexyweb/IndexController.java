@@ -28,7 +28,6 @@ public class IndexController {
     @RequestMapping(value = "")
     public List<Ele> index(@RequestParam(name = "offset", defaultValue = "0") int offset,
                            @SessionAttribute(name = "currentuser") User currentuser){
-        // Album album=new Album();
         // todo User[] users=;
         List<Ele> eles=albumService.getUserEles(currentuser.getUserid());
         return eles.subList(offset,length);

@@ -49,12 +49,11 @@ public class UserController {
     }
 
     @RequestMapping(value = "/like/likes")
-    public List<Long> getLikes(@RequestParam(name = "userid") Long userid) {
+    public List<Long> getLikes(@RequestParam(name = "userid", required = false, defaultValue = "") Long userid,
+                               @SessionAttribute(name = "currentuser") User currentuser) {
+        if(userid==null)
+            userid=currentuser.getUserid();
         return userService.getUserLikes(userid);
-    }
-    @RequestMapping(value = "/like/likes")
-    public List<Long> getLikes(@SessionAttribute(name = "currentuser") User currentuser) {
-        return userService.getUserLikes(currentuser.getUserid());
     }
 
     @RequestMapping(value = "/like/likers")
@@ -67,7 +66,7 @@ public class UserController {
     @RequestMapping(value = "/comment")
     public Long comment(@RequestParam(name = "eleid") Long eleid,
                         @RequestParam(name = "comments") String comments,
-                        @RequestParam(name = "tarid", required = false, defaultValue = "") Long tarid,
+                        @RequestParam(name = "tarid") Long tarid,
                         @SessionAttribute(name = "currentuser") User currentuser) {
         Long commentid=albumService.addCommentToEle(new Comment(eleid, currentuser.getUserid(), tarid, comments));
         return commentid;
@@ -118,7 +117,7 @@ public class UserController {
     public String editUserAccount(){
         // todo update session
         return null;
-    }
+}
     @RequestMapping(value = "/account/login")
     public Long loginUserAccount(@RequestParam(name = "username") String username,
                                  @RequestParam(name = "password") String password,
