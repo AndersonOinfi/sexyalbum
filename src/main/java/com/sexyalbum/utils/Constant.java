@@ -4,5 +4,5 @@ package com.sexyalbum.utils;
 public class Constant {
     //
     public final static String IMAGE_PREPATH ="src/main/resources/static/images/";
-    public final static String DEFAULT_AVATAR ="images/AlbumIcon.png";
+    public final static String DEFAULT_AVATAR ="AlbumIcon.png";
 }
