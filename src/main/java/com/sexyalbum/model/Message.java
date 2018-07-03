@@ -8,9 +8,20 @@ public class Message {
     private int type;
     private Long info;
 
+    private User user;
+    // todo
+    private Comment comment;
+    private Ele ele;
+
+    // to userid
     public final static int FOLLOW_MESSAGE=1;
     public final static int LIKE_MESSAGE=2;
+    // to commentid
     public final static int COMMENT_MESSAGE=3;
+    // to eleid
+    public final static int SHARE_MESSAGE=4;
+    // to album
+    public final static int ALBUM_MESSAGE=5;
 
     public Message() {
     }
@@ -70,5 +81,13 @@ public class Message {
 
     public void setInfo(Long info) {
         this.info = info;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

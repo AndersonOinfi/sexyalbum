@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/*
 @RestController
 @RequestMapping("/")
 public class IndexController {
@@ -33,3 +34,4 @@ public class IndexController {
         return eles.subList(offset,length);
     }
 }
+*/

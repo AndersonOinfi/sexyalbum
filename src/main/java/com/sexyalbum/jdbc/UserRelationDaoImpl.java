@@ -36,11 +36,11 @@ public class UserRelationDaoImpl implements UserRelationDao {
 
     @Override
     public List<Long> findUserFollowers(Long userid) {
-        List<Long> followersid=template.query("select * from user_relation where userid=?", new Object[]{userid},
+        List<Long> followersid=template.query("select * from user_relation where friendid=?", new Object[]{userid},
                 new RowMapper<Long>() {
                     @Override
                     public Long mapRow(ResultSet resultSet, int i) throws SQLException {
-                        return resultSet.getLong("friendid");
+                        return resultSet.getLong("userid");
                     }
                 });
         if(followersid!=null&&!followersid.isEmpty())
@@ -51,7 +51,7 @@ public class UserRelationDaoImpl implements UserRelationDao {
 
     @Override
     public List<Long> findUserFollowings(Long userid) {
-        List<Long> followingsid=template.query("select * from user_relation where friendid=?", new Object[]{userid},
+        List<Long> followingsid=template.query("select * from user_relation where userid=?", new Object[]{userid},
                 new RowMapper<Long>() {
                     @Override
                     public Long mapRow(ResultSet resultSet, int i) throws SQLException {

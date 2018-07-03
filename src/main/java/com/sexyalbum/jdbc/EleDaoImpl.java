@@ -61,12 +61,3 @@ public class EleDaoImpl implements EleDao {
             return null;
     }
 }
-
-class EleRowMapper implements RowMapper<String>{
-
-    @Override
-    public String mapRow(ResultSet resultSet, int i) throws SQLException {
-        //todo
-        return null;
-    }
-}

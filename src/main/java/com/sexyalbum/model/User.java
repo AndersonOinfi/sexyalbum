@@ -12,6 +12,8 @@ public class User {
 
     private ArrayList<Album> albums;
 
+    private ArrayList<Long> friends;
+
     public User() {
     }
 
@@ -69,5 +71,13 @@ public class User {
 
     public void setAlbums(ArrayList<Album> albums) {
         this.albums = albums;
+    }
+
+    public ArrayList<Long> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(ArrayList<Long> friends) {
+        this.friends = friends;
     }
 }

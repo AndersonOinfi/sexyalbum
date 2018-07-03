@@ -1,5 +1,6 @@
 package com.sexyalbum.service;
 
+import com.sexyalbum.model.Message;
 import com.sexyalbum.model.User;
 
 import java.util.List;
@@ -36,4 +37,12 @@ public interface UserService {
 
     // 验证用户
     Long verifyUser(User user);
+
+    Long createMessage(Message message);
+
+    List<Message> getUserMessages(Long userid);
+
+    List<Message> getUserUnreadMessages(Long userid);
+
+    List<Message> getUserMainMessages(Long userid);
 }

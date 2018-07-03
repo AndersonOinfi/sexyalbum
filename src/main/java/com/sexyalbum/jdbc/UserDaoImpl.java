@@ -35,9 +35,10 @@ public class UserDaoImpl implements UserDao {
         return keyHolder.getKey().longValue();
     }
 
+    // todo
     @Override
     public int update(User user) {
-        return template.update("update album_user set username=?, password=?, where userid=?",
+        return template.update("update album_user set username=?, password=? where userid=?",
                 new Object[]{user.getUsername(), user.getPassword(), 1});
     }
 

@@ -1,9 +1,6 @@
 package com.sexyalbum.sexyweb;
 
-import com.sexyalbum.model.Album;
-import com.sexyalbum.model.Comment;
-import com.sexyalbum.model.Ele;
-import com.sexyalbum.model.User;
+import com.sexyalbum.model.*;
 import com.sexyalbum.service.AlbumService;
 import com.sexyalbum.service.UserService;
 import com.sexyalbum.utils.FileSaver;
@@ -33,6 +30,25 @@ public class UserController {
         ArrayList<Album> albums=new ArrayList<>(albumService.getUserAlbums(user.getUserid()));
         user.setAlbums(albums);
         return user;
+    }
+
+    @RequestMapping(value = "/skech")
+    public User getUserSkech(@RequestParam(name = "userid", required = false, defaultValue = "") Long userid,
+                             @SessionAttribute(name = "currentuser") User currentuser) {
+        if(userid==null)
+            userid=currentuser.getUserid();
+        return userService.getUser(userid);
+    }
+
+    // get messages
+    @RequestMapping(value = "/messages")
+    public List<Message> getUnreadMessages(@SessionAttribute(name = "currentuser") User currentuser) {
+        return userService.getUserUnreadMessages(currentuser.getUserid());
+    }
+
+    @RequestMapping(value = "/main")
+    public List<Message> getMainMessages(@SessionAttribute(name = "currentuser") User currentuser) {
+        return userService.getUserMainMessages(currentuser.getUserid());
     }
 
     // like a ele
@@ -76,7 +92,10 @@ public class UserController {
     @RequestMapping(value = "/follow")
     public int follow(@RequestParam(name = "friendid") Long friendid,
                       @SessionAttribute(name = "currentuser") User currentuser) {
-        return userService.addFriend(currentuser.getUserid(), friendid);
+        int rs=userService.addFriend(currentuser.getUserid(), friendid);
+        if(rs>0)
+            userService.createMessage(new Message(currentuser.getUserid(), friendid, Message.FOLLOW_MESSAGE, friendid));
+        return rs;
     }
 
     // get your followers' list
@@ -126,6 +145,9 @@ public class UserController {
         Long userid=userService.verifyUser(user);
         if(userid!=null) {
             user.setUserid(userid);
+            List<Long> friends=userService.getFollowers(userid);
+            if(friends!=null)
+                user.setFriends(new ArrayList<>(friends));
             session.setAttribute("currentuser",user);
         }
         return userid;
@@ -159,7 +181,19 @@ public class UserController {
     @RequestMapping(value = "/album/create")
     public Long createAlbum(@RequestParam(name = "albumname") String albumName,
                             @SessionAttribute(name = "currentuser") User currentuser){
-        return albumService.createAlbum(new Album(currentuser.getUserid(),albumName));
+        Long albumid=albumService.createAlbum(new Album(currentuser.getUserid(),albumName));
+        if(albumid!=null) {
+            Long userid=currentuser.getUserid();
+            userService.createMessage(new Message(userid, userid, Message.ALBUM_MESSAGE, albumid));
+            List<Long> friends=currentuser.getFriends();
+            if(friends!=null) {
+                for (Long friendid:
+                        friends) {
+                    userService.createMessage(new Message(userid, friendid, Message.ALBUM_MESSAGE, albumid));
+                }
+            }
+        }
+        return albumid;
     }
     @RequestMapping(value = "/album/delete")
     public int deleteAlbum(@RequestParam(name = "albumid") Long albumid){

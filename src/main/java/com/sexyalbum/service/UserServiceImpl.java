@@ -1,14 +1,17 @@
 package com.sexyalbum.service;
 
 import com.sexyalbum.jdbc.LikeRelationDao;
+import com.sexyalbum.jdbc.MessageDao;
 import com.sexyalbum.jdbc.UserDao;
 import com.sexyalbum.jdbc.UserRelationDao;
 import com.sexyalbum.model.LikeRelation;
+import com.sexyalbum.model.Message;
 import com.sexyalbum.model.User;
 import com.sexyalbum.model.UserRelation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -19,6 +22,9 @@ public class UserServiceImpl implements UserService {
     private UserRelationDao userRelationDao;
     @Autowired
     private LikeRelationDao likeRelationDao;
+    @Autowired
+    private MessageDao messageDao;
+
 
     @Override
     public Long createUser(User user) {
@@ -102,5 +108,43 @@ public class UserServiceImpl implements UserService {
             if(user.getPassword().equals(userInfo.getPassword()))
                 return userInfo.getUserid();
         return null;
+    }
+
+    @Override
+    public Long createMessage(Message message) {
+        return messageDao.add(message);
+    }
+
+    @Override
+    public List<Message> getUserMessages(Long userid) {
+        return messageDao.findUserMessages(userid);
+    }
+
+    @Override
+    public List<Message> getUserUnreadMessages(Long userid) {
+        List<Message> messages=messageDao.findUserMessages(userid);
+        List<Message> unreadMessages=new ArrayList<>();
+        if(messages!=null) {
+            for (Message message:
+                    messages) {
+                if(message.isFlag())
+                    unreadMessages.add(message);
+            }
+        }
+        return unreadMessages;
+    }
+
+    @Override
+    public List<Message> getUserMainMessages(Long userid) {
+        List<Message> messages=messageDao.findUserMessages(userid);
+        List<Message> mainMessages=new ArrayList<>();
+        if(messages!=null) {
+            for (Message message:
+                    messages) {
+                if(message.getType()==Message.SHARE_MESSAGE)
+                    mainMessages.add(message);
+            }
+        }
+        return mainMessages;
     }
 }
