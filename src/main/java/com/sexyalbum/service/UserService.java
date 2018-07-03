@@ -36,5 +36,4 @@ public interface UserService {
 
     // 验证用户
     Long verifyUser(User user);
-    // todo
 }

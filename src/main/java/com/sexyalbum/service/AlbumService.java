@@ -29,11 +29,9 @@ public interface AlbumService {
 
     Long addCommentToEle(Comment comment);
 
-    // todo
     int deleteComment();
 
     List<Comment> getEleComments(Long eleid);
 
-    // todo
     List<Comment> getUserComments(Long userid);
 }

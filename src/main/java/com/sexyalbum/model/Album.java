@@ -15,8 +15,7 @@ public class Album {
         this.albumid=null;
         this.userid=userid;
         this.albumName=albumName;
-        //eleList=new ArrayList<>();
-        //todo
+        this.eleList=null;
     }
 
     public Long getAlbumid() {

@@ -46,7 +46,6 @@ public class UserDaoImpl implements UserDao {
         return template.update("delete from album_user where userid=?", userid);
     }
 
-    //todo
     @Override
     public User find(Long id) {
         List<User> user=template.query("select * from album_user where userid=?",new Object[]{id},

@@ -12,7 +12,6 @@ public interface UserDao {
 
     User find(String username);
 
-    //todo
     List<User> findList();
 
     List<User> findWholeUserList();
