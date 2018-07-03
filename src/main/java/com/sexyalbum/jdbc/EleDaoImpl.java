@@ -23,19 +23,10 @@ public class EleDaoImpl implements EleDao {
 
     @Override
     public Long add(Ele ele) {
-        KeyHolder keyHolder=new GeneratedKeyHolder();
-        template.update(new PreparedStatementCreator() {
-            @Override
-            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement(
-                        "insert into ele(eleid, source, description) values(?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
-                ps.setLong(1,ele.getEleid());
-                ps.setString(2,ele.getSource());
-                ps.setString(3,ele.getDescription());
-                return ps;
-            }
-        }, keyHolder);
-        return keyHolder.getKey().longValue();
+        Long eleid=ele.getEleid();
+        template.update("insert into ele(eleid, source, description) values(?, ?, ?)",
+                eleid, ele.getSource(), ele.getDescription());
+        return eleid;
     }
 
     // 相册元素暂不提供修改功能
