@@ -1,6 +1,7 @@
 package com.sexyalbum.service;
 
 import com.sexyalbum.model.Album;
+import com.sexyalbum.model.Comment;
 import com.sexyalbum.model.Ele;
 
 import java.util.List;
@@ -23,4 +24,16 @@ public interface AlbumService {
     Long addAlbumEle(Long albumid,Ele ele);
     // 删除指定相册中的指定元素
     int deleteAlbumEle(Long albumid,Long eleid);
+
+    Ele getEle(Long eleid);
+
+    Long addCommentToEle(Comment comment);
+
+    // todo
+    int deleteComment();
+
+    List<Comment> getEleComments(Long eleid);
+
+    // todo
+    List<Comment> getUserComments(Long userid);
 }

@@ -1,6 +1,7 @@
 package com.sexyalbum.sexyweb;
 
 import com.sexyalbum.model.Album;
+import com.sexyalbum.model.Comment;
 import com.sexyalbum.model.Ele;
 import com.sexyalbum.model.User;
 import com.sexyalbum.service.AlbumService;
@@ -62,6 +63,16 @@ public class UserController {
         return userService.getEleLikers(eleid);
     }
 
+    // comment a ele
+    @RequestMapping(value = "/comment")
+    public Long comment(@RequestParam(name = "eleid") Long eleid,
+                        @RequestParam(name = "comments") String comments,
+                        @RequestParam(name = "tarid", required = false, defaultValue = "") Long tarid,
+                        @SessionAttribute(name = "currentuser") User currentuser) {
+        Long commentid=albumService.addCommentToEle(new Comment(eleid, currentuser.getUserid(), tarid, comments));
+        return commentid;
+    }
+
     // add a friend/following
     @RequestMapping(value = "/follow")
     public int follow(@RequestParam(name = "friendid") Long friendid,
@@ -71,24 +82,22 @@ public class UserController {
 
     // get your followers' list
     @RequestMapping(value = "/followers")
-    public List<Long> getUserFollowers(@SessionAttribute(name = "currentuser") User currentuser){
-        // todo
-        return userService.getFollowers(currentuser.getUserid());
-    }
-    @RequestMapping(value = "/followers")
-    public List<Long> getUserFollowers(@RequestParam(name = "userid") Long userid){
+    public List<Long> getUserFollowers(@RequestParam(name = "userid", required = false, defaultValue = "") Long userid,
+                                       @SessionAttribute(name = "currentuser") User currentuser){
+        if(userid==null)
+            userid=currentuser.getUserid();
         // todo
         return userService.getFollowers(userid);
     }
 
     // get your following's list
     @RequestMapping(value = "/followings")
-    public List<Long> getUserFollowing(@SessionAttribute(name = "currentuser") User currentuser){
+    public List<Long> getUserFollowing(@RequestParam(name = "userid", required = false, defaultValue = "") Long userid,
+                                       @SessionAttribute(name = "currentuser") User currentuser){
+        if(userid==null)
+            userid=currentuser.getUserid();
+        // todo
         return userService.getFollowings(currentuser.getUserid());
-    }
-    @RequestMapping(value = "/followings")
-    public List<Long> getUserFollowing(@RequestParam(name = "userid") Long userid){
-        return userService.getFollowings(userid);
     }
 
     // get your saved eles' list

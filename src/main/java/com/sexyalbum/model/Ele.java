@@ -2,6 +2,8 @@ package com.sexyalbum.model;
 
 import com.sexyalbum.utils.Constant;
 
+import java.util.ArrayList;
+
 public class Ele {
     private String prePath;
 
@@ -11,14 +13,17 @@ public class Ele {
     // like ".png"
     private String type;
 
+    private ArrayList<Comment> comments;
+
     public Ele() {
     }
 
     // image ele constructor
     public Ele(String type, String description) {
         this.prePath =Constant.IMAGE_PREPATH;
-        this.eleid = System.currentTimeMillis();
         this.type = type;
+        this.comments=null;
+        this.eleid = System.currentTimeMillis();
         this.source=eleid +"."+type;
         this.description=description;
     }
@@ -32,8 +37,24 @@ public class Ele {
         return prePath;
     }
 
+    public void setPrePath(String prePath) {
+        this.prePath = prePath;
+    }
+
     public String getType() {
         return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public ArrayList<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(ArrayList<Comment> comments) {
+        this.comments = comments;
     }
 
     public Long getEleid() {

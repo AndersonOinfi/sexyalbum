@@ -1,9 +1,11 @@
 package com.sexyalbum.service;
 
 import com.sexyalbum.jdbc.AlbumDao;
+import com.sexyalbum.jdbc.CommentDao;
 import com.sexyalbum.jdbc.EleDao;
 import com.sexyalbum.jdbc.RelationDao;
 import com.sexyalbum.model.Album;
+import com.sexyalbum.model.Comment;
 import com.sexyalbum.model.Ele;
 import com.sexyalbum.model.Relation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,8 @@ public class AlbumServiceImpl implements AlbumService {
     private RelationDao relationDao;
     @Autowired
     private EleDao eleDao;
+    @Autowired
+    private CommentDao commentDao;
 
     @Override
     public Long createAlbum(Album album) {
@@ -34,9 +38,7 @@ public class AlbumServiceImpl implements AlbumService {
 
     @Override
     public int deleteAlbum(Long albumid) {
-        int rs1=albumDao.delete(albumid);
-        int rs2=relationDao.deleteAlbumEles(albumid);
-        return rs1&rs2;
+        return albumDao.delete(albumid)&relationDao.deleteAlbumEles(albumid);
     }
 
     @Override
@@ -47,7 +49,7 @@ public class AlbumServiceImpl implements AlbumService {
             ArrayList<Ele> eles=new ArrayList<>();
             for (Long id:
                  elesid) {
-                eles.add(eleDao.find(id));
+                eles.add(getEle(id));
             }
         }
         return album;
@@ -64,7 +66,7 @@ public class AlbumServiceImpl implements AlbumService {
                 if (elesid != null && !elesid.isEmpty()) {
                     for (Long id :
                             elesid) {
-                        eles.add(eleDao.find(id));
+                        eles.add(getEle(id));
                     }
                 }
                 album.setEleList(eles);
@@ -76,7 +78,7 @@ public class AlbumServiceImpl implements AlbumService {
     @Override
     public List<Ele> getUserEles(Long userid) {
         List<Album> albums=albumDao.findUserAlbumsList(userid);
-        ArrayList<Ele> eles=new ArrayList<>();
+        List<Ele> eles=new ArrayList<>();
         if(albums!=null&&!albums.isEmpty()) {
             for (Album album :
                     albums) {
@@ -84,7 +86,7 @@ public class AlbumServiceImpl implements AlbumService {
                 if (elesid != null && !elesid.isEmpty()) {
                     for (Long id :
                             elesid) {
-                        eles.add(eleDao.find(id));
+                        eles.add(getEle(id));
                     }
                 }
             }
@@ -95,7 +97,7 @@ public class AlbumServiceImpl implements AlbumService {
                 return o1.getEleid().compareTo(o2.getEleid());
             }
         });
-        return eles.subList(0,eles.size());
+        return eles;
     }
 
     @Override
@@ -110,5 +112,37 @@ public class AlbumServiceImpl implements AlbumService {
     @Override
     public int deleteAlbumEle(Long albumid, Long eleid) {
         return relationDao.delete(new Relation(albumid,eleid));
+    }
+
+    @Override
+    public Ele getEle(Long eleid) {
+        Ele ele=eleDao.find(eleid);
+        if(ele!=null) {
+            ArrayList<Comment> comments=new ArrayList<>(getEleComments(eleid));
+            ele.setComments(comments);
+        }
+        return ele;
+    }
+
+    @Override
+    public Long addCommentToEle(Comment comment) {
+        return commentDao.add(comment);
+    }
+
+    // todo
+    @Override
+    public int deleteComment() {
+        return 0;
+    }
+
+    @Override
+    public List<Comment> getEleComments(Long eleid) {
+        return commentDao.findEleComments(eleid);
+    }
+
+    // todo
+    @Override
+    public List<Comment> getUserComments(Long userid) {
+        return null;
     }
 }
