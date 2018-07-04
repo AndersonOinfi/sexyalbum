@@ -3,6 +3,7 @@ package com.sexyalbum.sexyweb;
 import com.sexyalbum.model.*;
 import com.sexyalbum.service.AlbumService;
 import com.sexyalbum.service.UserService;
+import com.sexyalbum.utils.Constant;
 import com.sexyalbum.utils.FileSaver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @RestController
@@ -49,6 +51,18 @@ public class UserController {
     @RequestMapping(value = "/main")
     public List<Message> getMainMessages(@SessionAttribute(name = "currentuser") User currentuser) {
         return userService.getUserMainMessages(currentuser.getUserid());
+    }
+
+    @RequestMapping(value = "/explore")
+    public List<Ele> explore() {
+        List<Ele> eles=albumService.getAllEles();
+        eles.sort(new Comparator<Ele>() {
+            @Override
+            public int compare(Ele o1, Ele o2) {
+                return -1;
+            }
+        });
+        return eles;
     }
 
     // like a ele
@@ -98,6 +112,13 @@ public class UserController {
         return rs;
     }
 
+    // unfollow
+    @RequestMapping(value = "/follow/cancel")
+    public int unfollow(@RequestParam(name = "friendid") Long friendid,
+                        @SessionAttribute(name = "currentuser") User currentuser) {
+        return userService.deleteFriend(currentuser.getUserid(), friendid);
+    }
+
     // get your followers' list
     @RequestMapping(value = "/followers")
     public List<Long> getUserFollowers(@RequestParam(name = "userid", required = false, defaultValue = "") Long userid,
@@ -110,8 +131,8 @@ public class UserController {
 
     // get your following's list
     @RequestMapping(value = "/followings")
-    public List<Long> getUserFollowing(@RequestParam(name = "userid", required = false, defaultValue = "") Long userid,
-                                       @SessionAttribute(name = "currentuser") User currentuser){
+    public List<Long> getUserFollowings(@RequestParam(name = "userid", required = false, defaultValue = "") Long userid,
+                                        @SessionAttribute(name = "currentuser") User currentuser){
         if(userid==null)
             userid=currentuser.getUserid();
         // todo
@@ -133,10 +154,28 @@ public class UserController {
     // current user account management
     // nothing to edit now
     @RequestMapping(value = "/account/edit")
-    public String editUserAccount(){
-        // todo update session
-        return null;
-}
+    public int editUserAccount(@RequestParam(name = "password") String password,
+                               @RequestParam(name = "avatar") MultipartFile avatar,
+                                  HttpSession session) {
+        User user = (User) session.getAttribute("currentuser");
+        if (password != null)
+            user.setPassword(password);
+        if (avatar != null) {
+            try {
+                String path = avatar.getName() + avatar.getContentType().replaceAll("image/", "");
+                FileSaver.Save(avatar.getBytes(), Constant.IMAGE_PREPATH + path);
+                user.setAvatarPath(path);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return 0;
+            }
+        }
+        int rs;
+        if ((rs=userService.updateUser(user)) > 0)
+            session.setAttribute("currentuser", user);
+        return rs;
+    }
+
     @RequestMapping(value = "/account/login")
     public Long loginUserAccount(@RequestParam(name = "username") String username,
                                  @RequestParam(name = "password") String password,

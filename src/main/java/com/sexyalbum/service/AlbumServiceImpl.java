@@ -97,10 +97,15 @@ public class AlbumServiceImpl implements AlbumService {
         eles.sort(new Comparator<Ele>() {
             @Override
             public int compare(Ele o1, Ele o2) {
-                return o1.getEleid().compareTo(o2.getEleid());
+                return -(o1.getEleid().compareTo(o2.getEleid()));
             }
         });
         return eles;
+    }
+
+    @Override
+    public List<Ele> getAllEles() {
+        return eleDao.findWholeEleList();
     }
 
     @Override
