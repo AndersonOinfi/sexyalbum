@@ -90,4 +90,12 @@ public class Message {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public Ele getEle() {
+        return ele;
+    }
+
+    public void setEle(Ele ele) {
+        this.ele = ele;
+    }
 }

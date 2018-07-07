@@ -12,7 +12,7 @@ public class User {
 
     private ArrayList<Album> albums;
 
-    private ArrayList<Long> friends;
+    private ArrayList<Long> friendsid;
 
     public User() {
     }
@@ -30,6 +30,7 @@ public class User {
         this.username=user.getUsername();
         this.password=user.getPassword();
         this.avatar =user.getAvatar();
+        this.friendsid=user.getFriendsid();
     }
 
     public Long getUserid() {
@@ -73,11 +74,11 @@ public class User {
         this.albums = albums;
     }
 
-    public ArrayList<Long> getFriends() {
-        return friends;
+    public ArrayList<Long> getFriendsid() {
+        return friendsid;
     }
 
-    public void setFriends(ArrayList<Long> friends) {
-        this.friends = friends;
+    public void setFriendsid(ArrayList<Long> friendsid) {
+        this.friendsid = friendsid;
     }
 }

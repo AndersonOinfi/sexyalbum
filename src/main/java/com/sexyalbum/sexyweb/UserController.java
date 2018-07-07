@@ -186,7 +186,7 @@ public class UserController {
             user.setUserid(userid);
             List<Long> friends=userService.getFollowers(userid);
             if(friends!=null)
-                user.setFriends(new ArrayList<>(friends));
+                user.setFriendsid(new ArrayList<>(friends));
             session.setAttribute("currentuser",user);
         }
         return userid;
@@ -224,7 +224,7 @@ public class UserController {
         if(albumid!=null) {
             Long userid=currentuser.getUserid();
             userService.createMessage(new Message(userid, userid, Message.ALBUM_MESSAGE, albumid));
-            List<Long> friends=currentuser.getFriends();
+            List<Long> friends=currentuser.getFriendsid();
             if(friends!=null) {
                 for (Long friendid:
                         friends) {
@@ -254,12 +254,12 @@ public class UserController {
         }
         Long eleid=albumService.addAlbumEle(albumid, ele);
         Long userid = currentuser.getUserid();
-        userService.createMessage(new Message(userid, userid, Message.ALBUM_MESSAGE, eleid));
-        List<Long> friends = currentuser.getFriends();
+        userService.createMessage(new Message(userid, userid, Message.SHARE_MESSAGE, eleid));
+        List<Long> friends = currentuser.getFriendsid();
         if (friends != null) {
             for (Long friendid :
                     friends) {
-                userService.createMessage(new Message(userid, friendid, Message.ALBUM_MESSAGE, albumid));
+                userService.createMessage(new Message(userid, friendid, Message.SHARE_MESSAGE, albumid));
             }
         }
         return eleid;

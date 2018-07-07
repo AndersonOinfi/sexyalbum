@@ -1,9 +1,6 @@
 package com.sexyalbum.service;
 
-import com.sexyalbum.jdbc.LikeRelationDao;
-import com.sexyalbum.jdbc.MessageDao;
-import com.sexyalbum.jdbc.UserDao;
-import com.sexyalbum.jdbc.UserRelationDao;
+import com.sexyalbum.jdbc.*;
 import com.sexyalbum.model.LikeRelation;
 import com.sexyalbum.model.Message;
 import com.sexyalbum.model.User;
@@ -24,6 +21,8 @@ public class UserServiceImpl implements UserService {
     private LikeRelationDao likeRelationDao;
     @Autowired
     private MessageDao messageDao;
+    @Autowired
+    private EleDao eleDao;
 
 
     @Override
@@ -144,8 +143,11 @@ public class UserServiceImpl implements UserService {
         if(messages!=null) {
             for (Message message:
                     messages) {
-                if(message.getType()==Message.SHARE_MESSAGE)
+                if(message.getType()==Message.SHARE_MESSAGE) {
+                    message.setEle(eleDao.find(message.getInfo()));
+                    message.setUser(userDao.find(message.getUserid()));
                     mainMessages.add(message);
+                }
             }
         }
         return mainMessages;
