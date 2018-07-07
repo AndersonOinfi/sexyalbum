@@ -36,7 +36,7 @@ public interface UserService {
     List<Long> getEleLikers(Long eleid);
 
     // 验证用户
-    Long verifyUser(User user);
+    User verifyUser(User user);
 
     Long createMessage(Message message);
 

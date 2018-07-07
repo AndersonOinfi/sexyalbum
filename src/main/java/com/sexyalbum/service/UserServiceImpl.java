@@ -100,13 +100,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Long verifyUser(User user) {
+    public User verifyUser(User user) {
         User userInfo=null;
         if(user!=null)
             userInfo=userDao.find(user.getUsername());
         if(userInfo!=null)
             if(user.getPassword().equals(userInfo.getPassword()))
-                return userInfo.getUserid();
+                return userInfo;
         return null;
     }
 
@@ -127,8 +127,11 @@ public class UserServiceImpl implements UserService {
         if(messages!=null) {
             for (Message message:
                     messages) {
-                if(message.isFlag())
+                if(message.isFlag()) {
                     unreadMessages.add(message);
+                    message.setUser(userDao.find(message.getUserid()));
+                    messageDao.update(message.getMessageid());
+                }
             }
         }
         return unreadMessages;

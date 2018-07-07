@@ -6,11 +6,9 @@ import com.sexyalbum.service.UserService;
 import com.sexyalbum.utils.Constant;
 import com.sexyalbum.utils.FileSaver;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.util.ArrayList;
@@ -164,7 +162,7 @@ public class UserController {
             try {
                 String path = avatar.getName() + avatar.getContentType().replaceAll("image/", "");
                 FileSaver.Save(avatar.getBytes(), Constant.IMAGE_PREPATH + path);
-                user.setAvatarPath(path);
+                user.setAvatar(path);
             } catch (IOException e) {
                 e.printStackTrace();
                 return 0;
@@ -181,8 +179,10 @@ public class UserController {
                                  @RequestParam(name = "password") String password,
                                  HttpSession session){
         User user=new User(username,password);
-        Long userid=userService.verifyUser(user);
-        if(userid!=null) {
+        user=userService.verifyUser(user);
+        Long userid=null;
+        if(user!=null) {
+            userid=user.getUserid();
             user.setUserid(userid);
             List<Long> friends=userService.getFollowers(userid);
             if(friends!=null)

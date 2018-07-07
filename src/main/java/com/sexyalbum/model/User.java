@@ -8,7 +8,7 @@ public class User {
     private Long userid;
     private String username;
     private String password;
-    private String avatarPath;
+    private String avatar;
 
     private ArrayList<Album> albums;
 
@@ -21,7 +21,7 @@ public class User {
         this.userid=null;
         this.username = username;
         this.password = password;
-        this.avatarPath=Constant.DEFAULT_AVATAR;
+        this.avatar =Constant.DEFAULT_AVATAR;
         //todo
     }
 
@@ -29,7 +29,7 @@ public class User {
         this.userid=user.getUserid();
         this.username=user.getUsername();
         this.password=user.getPassword();
-        this.avatarPath=user.getAvatarPath();
+        this.avatar =user.getAvatar();
     }
 
     public Long getUserid() {
@@ -57,12 +57,12 @@ public class User {
         this.password = password;
     }
 
-    public String getAvatarPath() {
-        return avatarPath;
+    public String getAvatar() {
+        return avatar;
     }
 
-    public void setAvatarPath(String avatarPath) {
-        this.avatarPath = avatarPath;
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public ArrayList<Album> getAlbums() {
