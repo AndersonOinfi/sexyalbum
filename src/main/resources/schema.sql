@@ -2,7 +2,7 @@
 
 -- Create DataBase
 DROP DATABASE IF EXISTS `sexyalbum`;
-CREATE DATABASE `sexyalbum`;
+CREATE DATABASE `sexyalbum` CHARACTER SET utf8;
 
 USE `sexyalbum`;
 
