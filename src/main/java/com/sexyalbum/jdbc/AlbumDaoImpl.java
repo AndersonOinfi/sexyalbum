@@ -58,21 +58,13 @@ public class AlbumDaoImpl implements AlbumDao {
 
     @Override
     public List<Album> findUserAlbumsList(Long userid) {
-        List<Album> albums=template.query("select * from album where userid=?", new Object[]{userid},
+        return template.query("select * from album where userid=?", new Object[]{userid},
                 new BeanPropertyRowMapper<Album>(Album.class));
-        if(albums!=null&&!albums.isEmpty())
-            return albums;
-        else
-            return null;
     }
 
     @Override
     public List<Album> findWholeAlbumList() {
-        List<Album> album=template.query("select * from album", new Object[]{},
+        return template.query("select * from album", new Object[]{},
                 new BeanPropertyRowMapper<Album>(Album.class));
-        if(album!=null&&!album.isEmpty())
-            return album;
-        else
-            return null;
     }
 }

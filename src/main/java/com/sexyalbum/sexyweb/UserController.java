@@ -100,6 +100,11 @@ public class UserController {
         return commentid;
     }
 
+    @RequestMapping(value = "/elecomments")
+    public List<Comment> getEleComments(@RequestParam(name = "eleid") Long eleid) {
+        return albumService.getEleComments(eleid);
+    }
+
     // add a friend/following
     @RequestMapping(value = "/follow")
     public int follow(@RequestParam(name = "friendid") Long friendid,

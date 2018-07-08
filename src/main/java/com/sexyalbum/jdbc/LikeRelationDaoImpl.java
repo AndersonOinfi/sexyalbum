@@ -42,41 +42,29 @@ public class LikeRelationDaoImpl implements LikeRelationDao {
 
     @Override
     public List<Long> findUserLikes(Long userid) {
-        List<Long> elesid=template.query("select * from like_relation where userid=?", new Object[]{userid},
+        return template.query("select * from like_relation where userid=?", new Object[]{userid},
                 new RowMapper<Long>() {
                     @Override
                     public Long mapRow(ResultSet resultSet, int i) throws SQLException {
                         return resultSet.getLong("eleid");
                     }
                 });
-        if(elesid!=null&&!elesid.isEmpty())
-            return elesid;
-        else
-            return null;
     }
 
     @Override
     public List<Long> findEleLikers(Long eleid) {
-        List<Long> likersid=template.query("select * from like_relation where eleid=?", new Object[]{eleid},
+        return template.query("select * from like_relation where eleid=?", new Object[]{eleid},
                 new RowMapper<Long>() {
                     @Override
                     public Long mapRow(ResultSet resultSet, int i) throws SQLException {
                         return resultSet.getLong("userid");
                     }
                 });
-        if(likersid!=null&&!likersid.isEmpty())
-            return likersid;
-        else
-            return null;
     }
 
     @Override
     public List<LikeRelation> findWholeLikeRelationList() {
-        List<LikeRelation> likeRelations=template.query("select * from like_relation", new Object[]{},
+        return template.query("select * from like_relation", new Object[]{},
                 new BeanPropertyRowMapper<>(LikeRelation.class));
-        if(likeRelations!=null&&!likeRelations.isEmpty())
-            return likeRelations;
-        else
-            return null;
     }
 }

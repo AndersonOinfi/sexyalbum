@@ -74,11 +74,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> findWholeUserList() {
-        List<User> users=template.query("select * from album_user",new Object[]{},
+        return template.query("select * from album_user",new Object[]{},
                 new BeanPropertyRowMapper<User>(User.class));
-        if(users!=null&&!users.isEmpty())
-            return users;
-        else
-            return null;
     }
 }

@@ -45,11 +45,7 @@ public class MessageDaoImpl implements MessageDao {
 
     @Override
     public List<Message> findUserMessages(Long userid) {
-        List<Message> messages=template.query("select * from message where tarid=?", new Object[]{userid},
+        return template.query("select * from message where tarid=?", new Object[]{userid},
                 new BeanPropertyRowMapper<>(Message.class));
-        if(messages!=null&&!messages.isEmpty())
-            return messages;
-        else
-            return null;
     }
 }

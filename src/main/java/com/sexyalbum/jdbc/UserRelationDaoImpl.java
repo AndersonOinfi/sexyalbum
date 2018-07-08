@@ -36,41 +36,29 @@ public class UserRelationDaoImpl implements UserRelationDao {
 
     @Override
     public List<Long> findUserFollowers(Long userid) {
-        List<Long> followersid=template.query("select * from user_relation where friendid=?", new Object[]{userid},
+        return template.query("select * from user_relation where friendid=?", new Object[]{userid},
                 new RowMapper<Long>() {
                     @Override
                     public Long mapRow(ResultSet resultSet, int i) throws SQLException {
                         return resultSet.getLong("userid");
                     }
                 });
-        if(followersid!=null&&!followersid.isEmpty())
-            return followersid;
-        else
-            return null;
     }
 
     @Override
     public List<Long> findUserFollowings(Long userid) {
-        List<Long> followingsid=template.query("select * from user_relation where userid=?", new Object[]{userid},
+        return template.query("select * from user_relation where userid=?", new Object[]{userid},
                 new RowMapper<Long>() {
                     @Override
                     public Long mapRow(ResultSet resultSet, int i) throws SQLException {
                         return resultSet.getLong("friendid");
                     }
                 });
-        if(followingsid!=null&&!followingsid.isEmpty())
-            return followingsid;
-        else
-            return null;
     }
 
     @Override
     public List<UserRelation> findWholeUserRelationList() {
-        List<UserRelation> userRelations=template.query("select * from user_relation", new Object[]{},
+        return template.query("select * from user_relation", new Object[]{},
                 new BeanPropertyRowMapper<>(UserRelation.class));
-        if(userRelations!=null&&!userRelations.isEmpty())
-            return userRelations;
-        else
-            return null;
     }
 }

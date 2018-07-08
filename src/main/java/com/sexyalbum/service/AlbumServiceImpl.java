@@ -26,6 +26,7 @@ public class AlbumServiceImpl implements AlbumService {
     @Autowired
     private CommentDao commentDao;
 
+
     @Override
     public Long createAlbum(Album album) {
         return albumDao.add(album);

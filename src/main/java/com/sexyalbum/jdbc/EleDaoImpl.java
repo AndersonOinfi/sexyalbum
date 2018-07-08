@@ -45,7 +45,7 @@ public class EleDaoImpl implements EleDao {
     public Ele find(Long id) {
         List<Ele> ele=template.query("select * from ele where eleid=?", new Object[]{id},
                 new BeanPropertyRowMapper<>(Ele.class));
-        if(ele!=null&&!ele.isEmpty())
+        if(!ele.isEmpty())
             return ele.get(0);
         else
             return null;
@@ -53,11 +53,7 @@ public class EleDaoImpl implements EleDao {
 
     @Override
     public List<Ele> findWholeEleList() {
-        List<Ele> ele=template.query("select * from ele where eleid=?", new Object[]{},
+        return template.query("select * from ele", new Object[]{},
                 new BeanPropertyRowMapper<>(Ele.class));
-        if(ele!=null&&!ele.isEmpty())
-            return ele;
-        else
-            return null;
     }
 }

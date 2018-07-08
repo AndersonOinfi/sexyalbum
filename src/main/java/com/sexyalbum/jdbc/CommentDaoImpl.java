@@ -45,20 +45,13 @@ public class CommentDaoImpl implements CommentDao {
 
     @Override
     public List<Comment> findUserComments(Long userid) {
-        List<Comment> comments=template.query("select * from comment where userid=?", new Object[]{userid},
+        return template.query("select * from comment where userid=?", new Object[]{userid},
                 new BeanPropertyRowMapper<>(Comment.class));
-        if(comments!=null&&!comments.isEmpty())
-            return comments;
-        else
-            return null;
     }
 
     @Override
     public List<Comment> findEleComments(Long eleid) {
-        List<Comment> comments=template.query("select * from comment where eleid=?", new Object[]{eleid},
+        return template.query("select * from comment where eleid=?", new Object[]{eleid},
                 new BeanPropertyRowMapper<>(Comment.class));
-        if(comments!=null&&!comments.isEmpty())
-            return comments;
-        return null;
     }
 }

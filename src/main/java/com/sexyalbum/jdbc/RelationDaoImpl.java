@@ -41,26 +41,18 @@ public class RelationDaoImpl implements RelationDao {
 
     @Override
     public List<Long> findAlbumElesList(Long albumid) {
-        List<Long> elesid=template.query("select * from relation where albumid=?", new Object[]{albumid},
+        return template.query("select * from relation where albumid=?", new Object[]{albumid},
                 new RowMapper<Long>() {
                     @Override
                     public Long mapRow(ResultSet resultSet, int i) throws SQLException {
                         return resultSet.getLong("eleid");
                     }
                 });
-        if(elesid!=null&&!elesid.isEmpty())
-            return elesid;
-        else
-            return null;
     }
 
     @Override
     public List<Relation> findWholeRelationList() {
-        List<Relation> elesid=template.query("select * from relation where albumid=?", new Object[]{},
+        return template.query("select * from relation where albumid=?", new Object[]{},
                 new BeanPropertyRowMapper<>(Relation.class));
-        if(elesid!=null&&!elesid.isEmpty())
-            return elesid;
-        else
-            return null;
     }
 }
