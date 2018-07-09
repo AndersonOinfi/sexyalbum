@@ -77,7 +77,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/like/likes")
-    public List<Long> getLikes(@RequestParam(name = "userid", required = false, defaultValue = "") Long userid,
+    public List<Ele> getLikes(@RequestParam(name = "userid", required = false, defaultValue = "") Long userid,
                                @SessionAttribute(name = "currentuser") User currentuser) {
         if(userid==null)
             userid=currentuser.getUserid();

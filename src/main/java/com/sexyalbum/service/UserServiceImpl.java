@@ -1,10 +1,7 @@
 package com.sexyalbum.service;
 
 import com.sexyalbum.jdbc.*;
-import com.sexyalbum.model.LikeRelation;
-import com.sexyalbum.model.Message;
-import com.sexyalbum.model.User;
-import com.sexyalbum.model.UserRelation;
+import com.sexyalbum.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -89,8 +86,13 @@ public class UserServiceImpl implements UserService {
     // todo big cancel
 
     @Override
-    public List<Long> getUserLikes(Long userid) {
-        return likeRelationDao.findUserLikes(userid);
+    public List<Ele> getUserLikes(Long userid) {
+        List<Long> likes=likeRelationDao.findUserLikes(userid);
+        ArrayList<Ele> eles=new ArrayList<>();
+        for(Long id: likes) {
+            eles.add(eleDao.find(id));
+        }
+        return eles.subList(0,eles.size());
     }
 
     @Override
@@ -146,6 +148,7 @@ public class UserServiceImpl implements UserService {
                 if(message.getType()==Message.SHARE_MESSAGE) {
                     message.setEle(eleDao.find(message.getInfo()));
                     message.setUser(userDao.find(message.getUserid()));
+                    message.setLikingEle(likeRelationDao.findUserLikes(userid).contains(message.getEle().getEleid()));
                     mainMessages.add(message);
                 }
             }

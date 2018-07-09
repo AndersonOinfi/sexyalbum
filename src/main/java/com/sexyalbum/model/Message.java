@@ -13,6 +13,8 @@ public class Message {
     private Comment comment;
     private Ele ele;
 
+    private boolean isLikingEle;
+
     // to userid
     public final static int FOLLOW_MESSAGE=1;
     public final static int LIKE_MESSAGE=2;
@@ -97,5 +99,13 @@ public class Message {
 
     public void setEle(Ele ele) {
         this.ele = ele;
+    }
+
+    public boolean isLikingEle() {
+        return isLikingEle;
+    }
+
+    public void setLikingEle(boolean likingEle) {
+        isLikingEle = likingEle;
     }
 }

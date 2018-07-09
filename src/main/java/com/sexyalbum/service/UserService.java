@@ -1,5 +1,6 @@
 package com.sexyalbum.service;
 
+import com.sexyalbum.model.Ele;
 import com.sexyalbum.model.Message;
 import com.sexyalbum.model.User;
 
@@ -31,7 +32,7 @@ public interface UserService {
 
     int cancelLike(Long userid, Long eleid);
 
-    List<Long> getUserLikes(Long userid);
+    List<Ele> getUserLikes(Long userid);
 
     List<Long> getEleLikers(Long eleid);
 
