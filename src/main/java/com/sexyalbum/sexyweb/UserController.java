@@ -249,26 +249,31 @@ public class UserController {
     }
     @RequestMapping(value = "/album/addele")
     public Long addAlbumEle(@RequestParam(name = "albumid") Long albumid,
-                            @RequestParam(name = "file") MultipartFile file,
+                            @RequestParam(name = "file") List<MultipartFile> files,
                             @RequestParam(name = "description") String eleDescription,
                             @SessionAttribute(name = "currentuser") User currentuser) {
         // todo else file types
-        String type = file.getContentType().replaceAll("image/", "");
-        Ele ele = new Ele(type, eleDescription);
-        try {
-            FileSaver.Save(file.getBytes(), ele.getPrePath() + ele.getSource());
-        } catch (IOException e) {
-            e.printStackTrace();
-            return Long.parseLong("-1");
-        }
-        Long eleid = albumService.addAlbumEle(albumid, ele);
-        Long userid = currentuser.getUserid();
-        userService.createMessage(new Message(userid, userid, Message.SHARE_MESSAGE, eleid));
-        List<Long> friends = currentuser.getFriendsid();
-        if (friends != null) {
-            for (Long friendid :
-                    friends) {
-                userService.createMessage(new Message(userid, friendid, Message.SHARE_MESSAGE, albumid));
+        Long eleid=null;
+        for (MultipartFile file:
+                files){
+            String type = file.getContentType().replaceAll("image/", "");
+            Ele ele = new Ele(type, eleDescription);
+            try {
+                FileSaver.Save(file.getBytes(), ele.getPrePath() + ele.getSource());
+            } catch (IOException e) {
+                e.printStackTrace();
+                return Long.parseLong("-1");
+            }
+            if((eleid = albumService.addAlbumEle(albumid, ele))<=0)
+                break;
+            Long userid = currentuser.getUserid();
+            userService.createMessage(new Message(userid, userid, Message.SHARE_MESSAGE, eleid));
+            List<Long> friends = currentuser.getFriendsid();
+            if (friends != null) {
+                for (Long friendid :
+                        friends) {
+                    userService.createMessage(new Message(userid, friendid, Message.SHARE_MESSAGE, eleid));
+                }
             }
         }
         return eleid;
