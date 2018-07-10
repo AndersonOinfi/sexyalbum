@@ -29,6 +29,13 @@ public class Ele {
     }
 
     // todo other ele constructor
+    public Ele(Long eleid, String source, String description) {
+        this.eleid=eleid;
+        this.source=source;
+        this.description=description;
+    }
+
+
     public Ele(String description) {
         this.description = description;
     }

@@ -148,7 +148,11 @@ public class UserServiceImpl implements UserService {
                 if(message.getType()==Message.SHARE_MESSAGE) {
                     message.setEle(eleDao.find(message.getInfo()));
                     message.setUser(userDao.find(message.getUserid()));
-                    message.setLikingEle(likeRelationDao.findUserLikes(userid).contains(message.getEle().getEleid()));
+                    List<Long> likes=likeRelationDao.findUserLikes(userid);
+                    if(likes!=null&&message.getEle()!=null)
+                        message.setLikingEle(likes.contains(message.getEle().getEleid()));
+                    else
+                        message.setLikingEle(false);
                     mainMessages.add(message);
                 }
             }

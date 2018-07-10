@@ -222,6 +222,10 @@ public class UserController {
     public Album getAlbumInfo(@RequestParam(name = "albumid") Long albumid){
         return albumService.getAlbum(albumid);
     }
+    @RequestMapping(value = "/albums")
+    public List<Album> getAlbums(@SessionAttribute(name = "currentuser") User currentuser) {
+        return albumService.getUserAlbums(currentuser.getUserid());
+    }
     @RequestMapping(value = "/album/create")
     public Long createAlbum(@RequestParam(name = "albumname") String albumName,
                             @SessionAttribute(name = "currentuser") User currentuser){
@@ -245,7 +249,7 @@ public class UserController {
     }
     @RequestMapping(value = "/album/addele")
     public Long addAlbumEle(@RequestParam(name = "albumid") Long albumid,
-                            @RequestParam(name = "ele-file") MultipartFile file,
+                            @RequestParam(name = "file") MultipartFile file,
                             @RequestParam(name = "description") String eleDescription,
                             @SessionAttribute(name = "currentuser") User currentuser) {
         // todo else file types
@@ -255,9 +259,9 @@ public class UserController {
             FileSaver.Save(file.getBytes(), ele.getPrePath() + ele.getSource());
         } catch (IOException e) {
             e.printStackTrace();
-            return null;
+            return Long.parseLong("-1");
         }
-        Long eleid=albumService.addAlbumEle(albumid, ele);
+        Long eleid = albumService.addAlbumEle(albumid, ele);
         Long userid = currentuser.getUserid();
         userService.createMessage(new Message(userid, userid, Message.SHARE_MESSAGE, eleid));
         List<Long> friends = currentuser.getFriendsid();
